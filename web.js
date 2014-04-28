@@ -22,7 +22,7 @@ var payload = {
 	options = {
     url: 'http://www2.montgomerycountymd.gov/dlcsearch/SearchSupportService.asmx/GetSearchData',
 	method: 'POST',
-	proxy : 'http://127.0.0.1:8888',
+	//proxy : 'http://127.0.0.1:8888',
 	body: payload,
 	json: true,
     headers: {
