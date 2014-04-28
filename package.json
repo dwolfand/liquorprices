@@ -1,0 +1,31 @@
+{
+  "name": "liquorprices",
+  "version": "0.0.0",
+  "description": "Liquor Price Analysis Tool",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dwolfand/liquorprices.git"
+  },
+  "keywords": [
+    "liquor",
+    "prices"
+  ],
+  "author": "dwolfand",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/dwolfand/liquorprices/issues"
+  },
+  "dependencies": {
+    "logfmt": "~1.1.2",
+    "express": "~4.1.1",
+    "request": "~2.34.0",
+    "http": "0.0.0"
+  },
+  "engines": {
+    "node": "0.10.15"
+  }
+}
