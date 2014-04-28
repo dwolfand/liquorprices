@@ -2,6 +2,7 @@
 var express = require("express");
 var logfmt = require("logfmt");
 var request = require('request');
+var pg = require('pg');
 var app = express();
 
 app.use(logfmt.requestLogger());
@@ -48,6 +49,21 @@ function callback(error, response, body) {
 };
 
 request(options, callback);
+
+
+  // res.send('hello');
+});
+
+app.get('/dbtest', function(req, res) {
+console.log("here");
+pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+  client.query('SELECT * FROM films', function(err, result) {
+    done();
+    if(err) res.send(err);
+    res.send(result.rows);
+  });
+});
+
   // res.send('hello');
 });
 
@@ -55,3 +71,4 @@ var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
   console.log("Listening on " + port);
 });
+
