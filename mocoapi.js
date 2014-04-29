@@ -54,9 +54,9 @@ var transformMocoObjToLPObj = function (source, curDate){
 		destination.sale = [{'saleprice':parseFloat(source.saleprice),'saleenddate':tools.parseDate(source.saleenddate)}];
 		//console.log("display:"+new moment.utc(tools.parseDate(source.saleenddate)).format());
 	}
-	if (source.itemcode === "42165"){
-		destination.sale = [{'saleprice':parseFloat("1.420"),'saleenddate':new Date('01/01/2015')}];
-	}
+	// if (source.itemcode === "42165"){
+		// destination.sale = [{'saleprice':parseFloat("1.420"),'saleenddate':tools.parseDate('01/01/2015')}];
+	// }
 	destination.category = source.categoryname;
 	destination.imgsrc = source.imgsrc;
 	destination.longdescription = source.longdescription;
