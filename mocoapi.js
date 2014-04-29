@@ -3,7 +3,7 @@ var request = require('request');
 module.exports = {
   getAllLiquors: function (curDate, callback) {
     	var payload = {
-		'displaycnt':0,
+		'displaycnt':20,
 		'keyword':'',
 		'pricemin':'0',
 		'pricemax':'10000',
