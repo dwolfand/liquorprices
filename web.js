@@ -21,11 +21,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/loaddb', function(req, res) {
-	
 	mocoapi.getAllLiquors(new Date(), datastore.loadLiquorsIntoDB);
-
 	res.send('importing underwayyyyy');
-   
+});
+
+app.get('/finddiff', function(req, res) {
+	datastore.findDiff(function(diff){
+		res.send(diff.toString());
+	});
 });
 
 var port = Number(process.env.PORT || 5000);

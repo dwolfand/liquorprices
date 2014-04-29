@@ -8,6 +8,31 @@ var dbConnection;
 var collections = {};
 
 module.exports = {
+	findDiff: function(callback){
+		var diffs = [];
+		getCollection('originalliquorprices', function(origcollection) {
+			origcollection.find().toArray(function(err, results){
+				var orig = mapDBResults1(results);
+				getCollection('liquorprices', function(newcollection) {
+					newcollection.find().toArray(function(err, newresults){
+						var newstuff = mapDBResults(newresults);
+						var count = 0;
+						for (key in orig){
+							count++;
+							if (!newstuff[orig[key].itemcode]){
+								console.log(orig[key]);
+								diffs.push(orig[key].itemcode);
+							}
+							//if (count>10) break;
+						}
+						console.log(diffs);
+						callback(diffs);
+					});
+				});
+			});
+		});
+	},
+
 	loadLiquorsIntoDB: function(sourceLiquors, curDate){
 		getCollection(liquorPricesCollection, function(collection) {
 			//collection.remove({},function(err, removed){
@@ -48,6 +73,13 @@ module.exports = {
 								collection.update({_id:sourceLiquor._id}, dbUpdates,function(err,rs) {
 										if (err){
 											console.log("error updating item");
+											console.log(er);
+										}
+								});
+							} else {
+								collection.update({_id:sourceLiquor._id}, {$set: {lastUpdated: curDate}},function(err,rs) {
+										if (err){
+											console.log("error updating last mod date");
 											console.log(er);
 										}
 								});
@@ -158,6 +190,15 @@ var mapDBResults = function(results){
 	var resultsList = [];
 	for (key in results) {
 		resultsList[results[key]._id] = results[key];
+	}
+	return resultsList;
+};
+
+var mapDBResults1 = function(results){
+	console.log('parsing db items into list');
+	var resultsList = [];
+	for (key in results) {
+		resultsList[results[key].itemcode] = results[key];
 	}
 	return resultsList;
 };

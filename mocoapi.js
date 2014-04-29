@@ -5,7 +5,7 @@ var moment = require('moment');
 module.exports = {
   getAllLiquors: function (curDate, callback) {
     	var payload = {
-		'displaycnt':20,
+		'displaycnt':0,
 		'keyword':'',
 		'pricemin':'0',
 		'pricemax':'10000',
