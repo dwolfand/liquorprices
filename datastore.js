@@ -4,67 +4,106 @@ var tools = require('./tools');
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://david:liquorpricespass@localhost:10062/liquorprices';
 var liquorPricesCollection = process.env.LIQUOR_PRICES_COLLECTION_NAME || 'liquorpricesdev';
 
-var 
+var dbConnection;
+var collections = {};
 
 module.exports = {
 	loadLiquorsIntoDB: function(sourceLiquors, curDate){
-		console.log("connecting to mongo db to insert records");
-		mongo.Db.connect(mongoUri, function (err, db) {
-			console.log("connected to mongo db: "+db);
-			db.collection(liquorPricesCollection, function(er, collection) {
-				console.log("accessing collection: "+collection);
-				//collection.remove({},function(err, removed){
-					//console.log("removed collection documents: "+removed);
-					collection.find().toArray(function(err, results){
-						if (er){
-							console.log("error fetching all items");
-							console.log(er);
+		getCollection(liquorPricesCollection, function(collection) {
+			//collection.remove({},function(err, removed){
+				//console.log("removed collection documents: "+removed);
+				collection.find().toArray(function(err, results){
+					if (err){
+						console.log("error fetching all items");
+						console.log(er);
+					}
+					var existingLiquors = mapDBResults(results);
+					
+					for (key in sourceLiquors) {
+						var sourceLiquor = sourceLiquors[key];
+						if (!existingLiquors[sourceLiquor._id]){ //means we need to add the new item
+							console.log("item not found, inserting new record: "+sourceLiquor._id);
+							collection.insert(sourceLiquor, {w:1}, function(err,rs) {
+								if (err){
+									console.log("error importing item");
+									console.log(er);
+								}
+							});
 						}
-						var existingLiquors = mapDBResults(results);
-						
-						for (key in sourceLiquors) {
-							var sourceLiquor = sourceLiquors[key];
-							if (!existingLiquors[sourceLiquor._id]){ //means we need to add the new item
-								console.log("item not found, inserting new record: "+sourceLiquor._id);
-								collection.insert(sourceLiquor, {w:1}, function(er,rs) {
-									if (er){
-										console.log("error importing item");
-										console.log(er);
-									}
+						else { //we found the existing item, so check for changes and sales
+							var updates = getUpdatesOnLiquorObjects(existingLiquors[sourceLiquor._id], sourceLiquor, curDate);
+							if (!tools.isEmptyObject(updates)){//check if there are any updates needed
+								console.log('updating record: '+sourceLiquor._id);
+								var dbUpdates = {
+									$set: {description: sourceLiquor.description,
+										size: sourceLiquor.size,
+										price: sourceLiquor.price,
+										category: sourceLiquor.category,
+										imgsrc: sourceLiquor.imgsrc,
+										longdescription: sourceLiquor.longdescription,
+										status: sourceLiquor.status,
+										lastUpdated: curDate},		
+									$addToSet: updates};
+									
+								collection.update({_id:sourceLiquor._id}, dbUpdates,function(err,rs) {
+										if (err){
+											console.log("error updating item");
+											console.log(er);
+										}
 								});
 							}
-							else { //we found the existing item, so check for changes and sales
-								var updates = getUpdatesOnLiquorObjects(existingLiquors[sourceLiquor._id], sourceLiquor, curDate);
-								if (!tools.isEmptyObject(updates)){//check if there are any updates needed
-									console.log('updating record: '+sourceLiquor._id);
-									var dbUpdates = {
-										$set: {description: sourceLiquor.description,
-											size: sourceLiquor.size,
-											price: sourceLiquor.price,
-											category: sourceLiquor.category,
-											imgsrc: sourceLiquor.imgsrc,
-											longdescription: sourceLiquor.longdescription,
-											status: sourceLiquor.status,
-											lastUpdated: curDate},		
-										$addToSet: updates};
-										
-									collection.update({_id:sourceLiquor._id}, dbUpdates,function(er,rs) {
-											if (er){
-												console.log("error updating item");
-												console.log(er);
-											}
-									});
-								}
-							}
 						}
+					}
 
-						console.log("finished sending commands");
-					});
-				//});
-			});
+					console.log("finished sending commands");
+				});
+			//});
 		});
 	}
 };
+
+var openConnection = function(callback){
+	console.log("connecting to mongo db");
+	mongo.Db.connect(mongoUri, function (err, db) {
+		console.log("connected to mongo db");
+		if (!err) {
+			dbConnection = db;
+			dbConnection.on('close', function() {
+				dbConnection = null; //Remove db connection
+				collections = {}; //Remove collections
+				// connection closed
+			});
+			callback(db);
+		} else {
+			console.log("error connecting to db");
+		}
+	});
+};
+
+var getCollection = function(name, callback){
+	if (!dbConnection){
+		openConnection(function(db){
+			openCollection(db, name, callback);
+		});
+	} else if (collections[name]){
+		callback(collections[name]);
+	} else {
+		openCollection(dbConnection, name, callback);
+	}
+};
+
+var openCollection = function(db, name, callback){
+	db.collection(name, function(err, collection) {
+		if (err) {
+			console.log("error opening collection: "+name);
+		}
+		else {
+			console.log("accessing collection: "+name);
+			collections[name] = collection;
+			callback(collections[name]);
+		}
+	});
+}
 
 //Compares two liquor objects for updates - returns object with errors and sales ready for mongo update
 var getUpdatesOnLiquorObjects = function(oldObj, newObj, curDate){
