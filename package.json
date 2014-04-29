@@ -23,8 +23,9 @@
     "logfmt": "~1.1.2",
     "express": "~4.1.1",
     "request": "~2.34.0",
-	"http": "0.0.0",
-    "mongodb": "~1.4.2"
+    "http": "0.0.0",
+    "mongodb": "~1.4.2",
+    "moment": "~2.6.0"
   },
   "engines": {
     "node": "0.10.15"
