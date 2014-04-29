@@ -1,4 +1,5 @@
 var request = require('request');
+var tools = require('./tools');
 
 module.exports = {
   getAllLiquors: function (curDate, callback) {
@@ -49,7 +50,10 @@ var transformMocoObjToLPObj = function (source, curDate){
 	destination.price = parseFloat(source.price);
 	destination.sale = [];
 	if (source.saleprice !== 'N/A'){
-		destination.sale = [{'saleprice':parseFloat(source.saleprice),'saleenddate':new Date(source.saleenddate)}];
+		destination.sale = [{'saleprice':parseFloat(source.saleprice),'saleenddate':tools.parseDate(source.saleenddate)}];
+		console.log(new Date());
+		console.log(source.saleenddate);
+		console.log(tools.parseDate(source.saleenddate));
 	}
 	if (source.itemcode === "42165"){
 		destination.sale = [{'saleprice':parseFloat("1.420"),'saleenddate':new Date('01/01/2015')}];
