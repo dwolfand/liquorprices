@@ -1,0 +1,15 @@
+//Check for any items with an error
+{ "$unwind" : "$errors"}
+{ "$group" : { "_id" : "$_id" , "count" : { "$sum" : 1}}}
+{ "$match" : { "count" : { "$gt" : 0}}}
+
+//Check for items with more than one sale
+{ "$unwind" : "$sale"}
+{ "$group" : { "_id" : "$_id" , "count" : { "$sum" : 1}}}
+{ "$match" : { "count" : { "$gt" : 1}}}
+
+//Find items with more than one DISTINCT sale price
+{ "$unwind" : "$sale"}
+{ "$group" : { "_id" : { "id" : "$_id" , "sale" : "$sale.saleprice"}}}
+{ "$group" : { "_id" : "$_id.id" , "count" : { "$sum" : 1}}}
+{ "$match" : { "count" : { "$gt" : 1}}}

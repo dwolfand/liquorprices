@@ -13,6 +13,7 @@ var tools = require('./tools');
 var datastore = require('./datastore');
 var mocoapi = require('./mocoapi');
 
+var liquorPricesCollection = process.env.LIQUOR_PRICES_COLLECTION_NAME || 'liquorpricesdev';
 		
 app.use(logfmt.requestLogger());
 
@@ -21,7 +22,9 @@ app.get('/', function(req, res) {
 });
 
 app.get('/loaddb', function(req, res) {
-	mocoapi.getAllLiquors(new Date(), datastore.loadLiquorsIntoDB);
+	var recordsToImport = req.query.num || 20;
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	mocoapi.getAllLiquors(new Date(), recordsToImport, collectionTarget, datastore.loadLiquorsIntoDB);
 	res.send('importing underwayyyyy');
 });
 
@@ -32,7 +35,8 @@ app.get('/finddiff', function(req, res) {
 });
 
 app.get('/maxpercent', function(req, res) {
-	datastore.maxPercent(req.query.percent, function(result){
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	datastore.maxPercent(req.query.percent, collectionTarget, function(result){
 		res.json(result);
 	});
 });

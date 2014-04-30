@@ -3,9 +3,9 @@ var tools = require('./tools');
 var moment = require('moment');
 
 module.exports = {
-  getAllLiquors: function (curDate, callback) {
+  getAllLiquors: function (curDate, recordsToImport, collectionTarget, callback) {
     	var payload = {
-		'displaycnt':0,
+		'displaycnt':recordsToImport,
 		'keyword':'',
 		'pricemin':'0',
 		'pricemax':'10000',
@@ -30,7 +30,7 @@ module.exports = {
 			for (key in body.d){
 				sourceLiquors.push(transformMocoObjToLPObj(body.d[key], curDate));
 			}
-			callback(sourceLiquors, curDate);			
+			callback(sourceLiquors, curDate, collectionTarget);			
 		}
 		else{
 			console.log('ERROR!');

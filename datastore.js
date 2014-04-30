@@ -2,14 +2,13 @@ var mongo = require('mongodb');
 var tools = require('./tools');
 
 var mongoUri = process.env.MONGOHQ_URL || 'mongodb://david:liquorpricespass@localhost:10062/liquorprices';
-var liquorPricesCollection = process.env.LIQUOR_PRICES_COLLECTION_NAME || 'liquorpricesdev';
 
 var dbConnection;
 var collections = {};
 
 module.exports = {
-    maxPercent: function(percent, callback){
-        getCollection('liquorprices', function(newcollection) {
+    maxPercent: function(percent, collectionTarget, callback){
+        getCollection(collectionTarget, function(newcollection) {
 			newcollection.find().toArray(function(err, results){
                 console.log("test");
 				var liquors = mapDBResults(results);
@@ -61,8 +60,8 @@ module.exports = {
 		});
 	},
 
-	loadLiquorsIntoDB: function(sourceLiquors, curDate){
-		getCollection(liquorPricesCollection, function(collection) {
+	loadLiquorsIntoDB: function(sourceLiquors, curDate, collectionTarget){
+		getCollection(collectionTarget, function(collection) {
 			//collection.remove({},function(err, removed){
 				//console.log("removed collection documents: "+removed);
 				collection.find().toArray(function(err, results){
