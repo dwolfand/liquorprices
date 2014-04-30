@@ -8,6 +8,34 @@ var dbConnection;
 var collections = {};
 
 module.exports = {
+    maxPercent: function(percent, callback){
+        getCollection('liquorprices', function(newcollection) {
+			newcollection.find().toArray(function(err, results){
+                console.log("test");
+				var liquors = mapDBResults(results);
+				var returnResult = [];
+				var lowestSale;
+				var liquor;
+				for (var key in liquors){
+                    liquor = liquors[key];
+                    for (var saleKey in liquor.sale){
+                        if (lowestSale && liquor.sale[saleKey].saleprice < lowestSale.saleprice){
+                            lowestSale = liquor.sale[saleKey];
+                        }else{
+                            lowestSale = liquor.sale[saleKey];
+                        }
+                    }
+                    if (lowestSale && (lowestSale.saleprice/liquor.price)*100 <= percent){
+                        liquor.percent = (lowestSale.saleprice/liquor.price)*100;
+                        returnResult.push(liquor);
+                    }
+                    lowestSale = undefined;
+				}
+				callback(returnResult);
+			});
+        });
+    },
+    
 	findDiff: function(callback){
 		var diffs = [];
 		getCollection('originalliquorprices', function(origcollection) {
@@ -17,7 +45,7 @@ module.exports = {
 					newcollection.find().toArray(function(err, newresults){
 						var newstuff = mapDBResults(newresults);
 						var count = 0;
-						for (key in orig){
+						for (var key in orig){
 							count++;
 							if (!newstuff[orig[key].itemcode]){
 								console.log(orig[key]);
