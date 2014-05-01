@@ -90,6 +90,8 @@ module.exports = {
 									$set: {description: sourceLiquor.description,
 										size: sourceLiquor.size,
 										price: sourceLiquor.price,
+										cursaleprice: sourceLiquor.cursaleprice,
+										cursaleenddate: sourceLiquor.cursaleenddate,
 										category: sourceLiquor.category,
 										imgsrc: sourceLiquor.imgsrc,
 										longdescription: sourceLiquor.longdescription,
