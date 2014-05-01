@@ -5,8 +5,8 @@ exports.config = {
   files: {
     javascripts: {
       joinTo: {
-        'javascripts/app.js': /^(app|envs\/development|envs\\development)/,
-        'javascripts/vendor.js': /^(vendor\/scripts\/(common|development)|vendor\\scripts\\(common|development))/
+        'javascripts/app.js': /^(app|envs(\/||\\)development)/,
+        'javascripts/vendor.js': /^(vendor(\/||\\)scripts(\/||\\)(common|development)|bower_components)/
       },
       order: {
         before: [
@@ -20,7 +20,7 @@ exports.config = {
     },
     stylesheets: {
       joinTo: {
-        'stylesheets/app.css': /^(app|vendor\/styles|vendor\\styles)/
+        'stylesheets/app.css': /^(app|vendor(\/||\\)styles|bower_components)/
       },
       order: {
         before: ['vendor/styles/normalize.css']
@@ -41,8 +41,8 @@ exports.config = {
       files: {
         javascripts: {
           joinTo: {
-            'javascripts/app.js': /^(app|envs\/production|envs\\production)/,
-            'javascripts/vendor.js': /^(vendor\/scripts\/(common|production)|vendor\\scripts\\(common|production))/
+            'javascripts/app.js': /^(app|envs(\/||\\)production)/,
+            'javascripts/vendor.js': /^(vendor(\/||\\)scripts(\/||\\)(common|production))/
           },
           order: {
             before: [
