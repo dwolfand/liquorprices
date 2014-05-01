@@ -10,7 +10,7 @@
     "build:production": "brunch build --production",
     "update:ember": "node setup.js update:ember",
     "update:skeleton": "node setup.js update:skeleton",
-	"postinstall": "brunch build -P"
+	"postinstall": "brunch build"
   },
   "repository": {
     "type": "git",
