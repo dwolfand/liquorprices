@@ -1,10 +1,15 @@
 {
   "name": "liquorprices",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Liquor Price Analysis Tool",
   "main": "web.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/karma/bin/karma start --single-run --browsers PhantomJS",
+    "start": "brunch watch --server",
+    "build": "brunch build",
+    "build:production": "brunch build --production",
+    "update:ember": "node setup.js update:ember",
+    "update:skeleton": "node setup.js update:skeleton"
   },
   "repository": {
     "type": "git",
@@ -25,7 +30,19 @@
     "request": "~2.34.0",
     "http": "0.0.0",
     "mongodb": "~1.4.2",
-    "moment": "~2.6.0"
+    "moment": "~2.6.0",
+	"javascript-brunch": "~1.7.0",
+    "css-brunch": "~1.7.0",
+    "stylus-brunch": "~1.7.0",
+    "uglify-js-brunch": "~1.7.0",
+    "clean-css-brunch": "~1.7.0",
+    "auto-reload-brunch": "~1.7.0",
+    "ember-handlebars-brunch": "git://github.com/gcollazo/ember-handlebars-brunch.git#master"
+  },
+  "devDependencies": {
+    "karma": "*",
+    "karma-qunit": "*",
+    "karma-phantomjs-launcher": "~0.1.2"
   },
   "engines": {
     "node": "0.10.15"

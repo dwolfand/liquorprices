@@ -9,17 +9,19 @@ var mongo = require('mongodb');
 var moment = require('moment');
 
 //Custom Libraries
-var tools = require('./tools');
-var datastore = require('./datastore');
-var mocoapi = require('./mocoapi');
+var tools = require('./backend/tools');
+var datastore = require('./backend/datastore');
+var mocoapi = require('./backend/mocoapi');
 
 var liquorPricesCollection = process.env.LIQUOR_PRICES_COLLECTION_NAME || 'liquorpricesdev';
 		
 app.use(logfmt.requestLogger());
 
-app.get('/', function(req, res) {
-	res.send('nothing to see here');
-});
+// app.get('/', function(req, res) {
+	// res.send('nothing to see here');
+// });
+
+app.use(express.static(__dirname + '/public'));
 
 app.get('/loaddb', function(req, res) {
 	var recordsToImport = req.query.num || 20;
