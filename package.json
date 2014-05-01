@@ -10,7 +10,7 @@
     "build:production": "brunch build --production",
     "update:ember": "node setup.js update:ember",
     "update:skeleton": "node setup.js update:skeleton",
-	"postinstall": "brunch build"
+	"postinstall": "brunch build -P"
   },
   "repository": {
     "type": "git",
@@ -27,19 +27,18 @@
   },
   "dependencies": {
     "logfmt": "~1.1.2",
-    "express": "4.1.1",
+    "express": "~4.1.1",
     "request": "~2.34.0",
     "http": "0.0.0",
     "mongodb": "~1.4.2",
     "moment": "~2.6.0",
     "javascript-brunch": "~1.7.0",
-    "css-brunch": "1.7.0",
-    "stylus-brunch": "1.7.0",
+    "css-brunch": "~1.7.0",
     "uglify-js-brunch": "~1.7.0",
-    "clean-css-brunch": "1.7.1",
+    "clean-css-brunch": "~1.7.0",
     "auto-reload-brunch": "~1.7.0",
     "ember-handlebars-brunch": "git://github.com/gcollazo/ember-handlebars-brunch.git#master",
-    "brunch": "1.7.13"
+    "brunch": "~1.7.13"
   },
   "devDependencies": {
     "karma": "*",
