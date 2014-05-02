@@ -43,6 +43,25 @@ app.get('/maxpercent', function(req, res) {
 	});
 });
 
+app.get('/liquors', function(req, res) {
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	datastore.getAllLiquors(liquorPricesCollection, req.query.limit, req.query.category, function(result){
+		res.json(result);
+	});
+});
+
+app.get('/copycollection', function(req, res) {
+	datastore.copyCollection(req.query.from, req.query.to);
+	res.send("running...");
+});
+
+
+app.get('/updatesalefields', function(req, res) {
+	var collectionTarget = req.query.db || 'temp';
+	datastore.updateSaleFields(collectionTarget);
+	res.send("running...");
+});
+
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
   console.log("Listening on " + port);

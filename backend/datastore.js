@@ -7,10 +7,27 @@ var dbConnection;
 var collections = {};
 
 module.exports = {
+    getAllLiquors: function(collectionTarget, limit, category, callback){
+        getCollection(collectionTarget, function(collection) {
+        	query = {};
+        	if (category){
+        		query.category = {"$in":category.split(",")};
+        	}
+        	//fields = {"description": true, "size": true, "price": true, "status": true, "lastUpdated": true, "createddate": true, "category": true};
+        	fields = {};
+        	options = {};
+        	if (limit && limit > 0){
+        		options.limit = limit;
+        	}
+			collection.find(query,fields,options).toArray(function(err, results){
+				callback({"liquors":results});
+			});
+        });
+    },
+
     maxPercent: function(percent, collectionTarget, callback){
-        getCollection(collectionTarget, function(newcollection) {
-			newcollection.find().toArray(function(err, results){
-                console.log("test");
+        getCollection(collectionTarget, function(collection) {
+			collection.find().toArray(function(err, results){
 				var liquors = mapDBResults(results);
 				var returnResult = [];
 				var lowestSale;
@@ -60,6 +77,30 @@ module.exports = {
 		});
 	},
 
+	copyCollection: function(fromCollection, toCollection){
+		getCollection(fromCollection, function(origcollection) {
+			origcollection.find().toArray(function(err, results){
+				getCollection(toCollection, function(newcollection) {
+					for (var key in results){
+						newcollection.insert(results[key], {w:1}, function(err,rs) {
+							if (err){
+								console.log("error importing item");
+								console.log(err);
+							}
+						});
+					}
+				});
+			});
+		});
+	},
+
+	updateSaleFields: function(collectionTarget){
+		getCollection(collectionTarget, function(collection) {
+			updateSaleField(collection.find(), collection, 1);
+		});
+	},
+
+
 	loadLiquorsIntoDB: function(sourceLiquors, curDate, collectionTarget){
 		getCollection(collectionTarget, function(collection) {
 			//collection.remove({},function(err, removed){
@@ -67,7 +108,7 @@ module.exports = {
 				collection.find().toArray(function(err, results){
 					if (err){
 						console.log("error fetching all items");
-						console.log(er);
+						console.log(err);
 					}
 					var existingLiquors = mapDBResults(results);
 					
@@ -78,7 +119,7 @@ module.exports = {
 							collection.insert(sourceLiquor, {w:1}, function(err,rs) {
 								if (err){
 									console.log("error importing item");
-									console.log(er);
+									console.log(err);
 								}
 							});
 						}
@@ -102,14 +143,18 @@ module.exports = {
 								collection.update({_id:sourceLiquor._id}, dbUpdates,function(err,rs) {
 										if (err){
 											console.log("error updating item");
-											console.log(er);
+											console.log(err);
 										}
 								});
 							} else {
-								collection.update({_id:sourceLiquor._id}, {$set: {lastUpdated: curDate}},function(err,rs) {
+								var dbUpdates = {
+									$set: {cursaleprice: sourceLiquor.cursaleprice,
+										cursaleenddate: sourceLiquor.cursaleenddate, 
+										lastUpdated: curDate}};
+								collection.update({_id:sourceLiquor._id}, dbUpdates,function(err,rs) {
 										if (err){
 											console.log("error updating last mod date");
-											console.log(er);
+											console.log(err);
 										}
 								});
 							}
@@ -171,15 +216,8 @@ var getUpdatesOnLiquorObjects = function(oldObj, newObj, curDate){
 	var updates = {};
 	var errors = [];
 	
-	if (newObj.sale[0]){
-		var found = false;
-		for (key in oldObj.sale) {
-			if (oldObj.sale[key].saleprice === newObj.sale[0].saleprice && oldObj.sale[key].saleenddate.getTime() === newObj.sale[0].saleenddate.getTime()){
-				found = true;
-				break;
-			}
-		}
-		if (!found){
+	if (newObj.cursaleenddate){
+		if (!oldObj.cursaleenddate || oldObj.cursaleenddate.getTime() !== newObj.cursaleenddate.getTime()){
 			updates.sale = {$each: newObj.sale, $position: '0'};//newobj.sale will always be an array of 1 item - the new value
 				//the position parameter does not seem to be working, but leaving it in for now
 		}
@@ -230,4 +268,39 @@ var mapDBResults1 = function(results){
 		resultsList[results[key].itemcode] = results[key];
 	}
 	return resultsList;
+};
+
+var updateSaleField = function (itemCursor, collection, count){
+	itemCursor.nextObject(function(err, result){
+		if (err){
+				console.log("error updating item");
+				console.log(err);
+		}
+		if (result){
+			var salePrice;
+			var saleEnd;
+			if (result.sale.length > 0){
+				for (saleKey in result.sale){
+					if (!saleEnd || result.sale[saleKey].saleenddate > saleEnd){
+						salePrice = result.sale[saleKey].saleprice;
+						saleEnd = result.sale[saleKey].saleenddate;
+					}
+				}
+			}
+
+			console.log(count++);
+			
+			var dbUpdates = {
+				$set: {cursaleprice: salePrice,
+					cursaleenddate: saleEnd}};
+			collection.update({_id:result._id}, dbUpdates,function(err,rs) {
+				if (err){
+					console.log("error updating item");
+					console.log(err);
+				}else{
+					updateSaleField(itemCursor, collection, count);
+				}
+			});
+		}
+	});
 };

@@ -50,6 +50,8 @@ var transformMocoObjToLPObj = function (source, curDate){
 	destination.size = source.size;
 	destination.price = parseFloat(source.price);
 	destination.sale = [];
+	destination.cursaleprice=null;
+	destination.cursaleenddate=null;
 	if (source.saleprice !== 'N/A'){
 		destination.sale = [{'saleprice':parseFloat(source.saleprice),'saleenddate':tools.parseDate(source.saleenddate)}];
 		//console.log("display:"+new moment.utc(tools.parseDate(source.saleenddate)).format());

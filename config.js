@@ -6,7 +6,7 @@ exports.config = {
     javascripts: {
       joinTo: {
         'javascripts/app.js': /^(app|envs(\/||\\)development)/,
-        'javascripts/vendor.js': /^(vendor(\/||\\)scripts(\/||\\)(common|development)|bower_components)/
+        'javascripts/vendor.js': /^(vendor(\/||\\)scripts(\/||\\)(common|development))/
       },
       order: {
         before: [
@@ -14,13 +14,13 @@ exports.config = {
           'vendor/scripts/common/jquery.js',
           'vendor/scripts/common/handlebars.js',
           'vendor/scripts/development/ember.js',
-          'vendor/scripts/development/ember-data.js'
+          'vendor/scripts/development/e	mber-data.js'
         ]
       }
     },
     stylesheets: {
       joinTo: {
-        'stylesheets/app.css': /^(app|vendor(\/||\\)styles|bower_components)/
+        'stylesheets/app.css': /^(app|vendor(\/||\\)styles)/
       },
       order: {
         before: ['vendor/styles/normalize.css']
