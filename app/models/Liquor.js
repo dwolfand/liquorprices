@@ -12,6 +12,8 @@ module.exports = App.Liquor = DS.Model.extend({
   imgsrc: attr(),
   longdescription: attr(),
   status: attr(),
+  cursaleprice: attr(),
+  cursaleenddate: attr(),
   lastUpdated: attr(),
   createddate: attr()
 });
