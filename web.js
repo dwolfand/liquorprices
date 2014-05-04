@@ -62,6 +62,12 @@ app.get('/updatesalefields', function(req, res) {
 	res.send("running...");
 });
 
+app.get('/updatediscountfields', function(req, res) {
+	var collectionTarget = req.query.db || 'temp';
+	datastore.updateDiscountFields(collectionTarget);
+	res.send("running...");
+});
+
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
   console.log("Listening on " + port);

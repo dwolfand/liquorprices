@@ -1,7 +1,7 @@
 var mongo = require('mongodb');
 var tools = require('./tools');
 
-var mongoUri = process.env.MONGOHQ_URL || 'mongodb://david:liquorpricespass@localhost:10062/liquorprices';
+var mongoUri = process.env.MONGOHQ_URL;
 
 var dbConnection;
 var collections = {};
@@ -100,6 +100,11 @@ module.exports = {
 		});
 	},
 
+	updateDiscountFields: function(collectionTarget){
+		getCollection(collectionTarget, function(collection) {
+			updateDiscountField(collection.find(), collection, 1);
+		});
+	},
 
 	loadLiquorsIntoDB: function(sourceLiquors, curDate, collectionTarget){
 		getCollection(collectionTarget, function(collection) {
@@ -299,6 +304,35 @@ var updateSaleField = function (itemCursor, collection, count){
 					console.log(err);
 				}else{
 					updateSaleField(itemCursor, collection, count);
+				}
+			});
+		}
+	});
+};
+
+var updateDiscountField = function (itemCursor, collection, count){
+	itemCursor.nextObject(function(err, result){
+		if (err){
+				console.log("error updating item");
+				console.log(err);
+		}
+		if (result){
+			var discount = null;
+			
+			if (result.cursaleprice){
+				discount = 100 - ((result.cursaleprice/result.price) * 100);
+			}
+
+			console.log(count++);
+			
+			var dbUpdates = {
+				$set: {discount: discount}};
+			collection.update({_id:result._id}, dbUpdates,function(err,rs) {
+				if (err){
+					console.log("error updating item");
+					console.log(err);
+				}else{
+					updateDiscountField(itemCursor, collection, count);
 				}
 			});
 		}

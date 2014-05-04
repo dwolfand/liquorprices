@@ -4,9 +4,6 @@ module.exports = App.DataTableView = Ember.View.extend({
   data: function(emberLiquors){
     var liquors = [];
     emberLiquors.forEach(function(liquor){
-      console.log(liquor.get('id'));
-      console.log(liquor.get('cursaleenddate'));
-      console.log(liquor.get('cursaleprice'));
       var discount = "",enddate = "", saleprice = "";
       if (liquor.get('cursaleenddate')){
         enddate = new moment.utc(liquor.get('cursaleenddate')).format('MMMM Do YYYY');
