@@ -15,5 +15,6 @@ module.exports = App.Liquor = DS.Model.extend({
   cursaleprice: attr(),
   cursaleenddate: attr(),
   lastUpdated: attr(),
-  createddate: attr()
+  createddate: attr(),
+  discount: attr()
 });

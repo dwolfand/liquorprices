@@ -7,20 +7,62 @@ var dbConnection;
 var collections = {};
 
 module.exports = {
-    getAllLiquors: function(collectionTarget, limit, category, callback){
+    getAllLiquors: function(collectionTarget, limit, category, mindiscount, callback){
         getCollection(collectionTarget, function(collection) {
         	query = {};
         	if (category){
         		query.category = {"$in":category.split(",")};
         	}
-        	//fields = {"description": true, "size": true, "price": true, "status": true, "lastUpdated": true, "createddate": true, "category": true};
-        	fields = {};
+        	if (mindiscount){
+        		query.discount = {"$gt":parseFloat(mindiscount)};
+        	}
+        	fields = {description: 1,
+			  size: 1,
+			  price: 1,
+			  category: 1,
+			  imgsrc: 1,
+			  longdescription: 1,
+			  status: 1,
+			  cursaleprice: 1,
+			  cursaleenddate: 1,
+			  lastUpdated: 1,
+			  createddate: 1,
+			  discount: 1};
         	options = {};
         	if (limit && limit > 0){
         		options.limit = limit;
         	}
 			collection.find(query,fields,options).toArray(function(err, results){
 				callback({"liquors":results});
+			});
+        });
+    },
+
+    getTopSales: function(collectionTarget, limit, callback){
+    	var returnResults = [];
+    	query = {discount: {"$gt":0}};
+		fields = {description: 1,
+		  size: 1,
+		  price: 1,
+		  category: 1,
+		  imgsrc: 1,
+		  longdescription: 1,
+		  status: 1,
+		  cursaleprice: 1,
+		  cursaleenddate: 1,
+		  lastUpdated: 1,
+		  createddate: 1,
+		  discount: 1};
+    	options = {sort:[["discount","desc"]],limit:3};
+        getCollection(collectionTarget, function(collection) {
+        	query.category = {"$in":"IMPORTED VODKA,DOMESTIC VODKA,IMPORTED VODKA FLAVORS,DOMESTIC VODKA FLAVORS".split(",")};
+			collection.find(query,fields,options).toArray(function(err, vodkaResults){
+				returnResults = returnResults.concat(vodkaResults);
+				query.category = {"$in":"IMPORTED SCOTCH,DOMESTIC SCOTCH,SINGLE MALT SCOTCH".split(",")};
+				collection.find(query,fields,options).toArray(function(err, scotchResults){
+					returnResults = returnResults.concat(scotchResults);
+					callback({"liquors":returnResults});
+				});
 			});
         });
     },
@@ -138,6 +180,7 @@ module.exports = {
 										price: sourceLiquor.price,
 										cursaleprice: sourceLiquor.cursaleprice,
 										cursaleenddate: sourceLiquor.cursaleenddate,
+										discount: sourceLiquor.discount,
 										category: sourceLiquor.category,
 										imgsrc: sourceLiquor.imgsrc,
 										longdescription: sourceLiquor.longdescription,
@@ -154,7 +197,8 @@ module.exports = {
 							} else {
 								var dbUpdates = {
 									$set: {cursaleprice: sourceLiquor.cursaleprice,
-										cursaleenddate: sourceLiquor.cursaleenddate, 
+										cursaleenddate: sourceLiquor.cursaleenddate,
+										discount: sourceLiquor.discount,
 										lastUpdated: curDate}};
 								collection.update({_id:sourceLiquor._id}, dbUpdates,function(err,rs) {
 										if (err){

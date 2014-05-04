@@ -4,20 +4,16 @@ module.exports = App.DataTableView = Ember.View.extend({
   data: function(emberLiquors){
     var liquors = [];
     emberLiquors.forEach(function(liquor){
-      var discount = "",enddate = "", saleprice = "";
-      if (liquor.get('cursaleenddate')){
-        enddate = new moment.utc(liquor.get('cursaleenddate')).format('MMMM Do YYYY');
-        discount = (100 - ((liquor.get('cursaleprice')/liquor.get('price'))*100)).toFixed(3) + "%"
-        saleprice = liquor.get('cursaleprice');
-      }
+      var enddate=liquor.get('cursaleenddate'),
+        discount = liquor.get('discount');
       liquors.push({
         description: liquor.get('description'),
         price: liquor.get('price'),
         size: liquor.get('size'),
-        cursaleprice: saleprice,
-        cursaleenddate: enddate,
+        cursaleprice: liquor.get('cursaleprice'),
+        cursaleenddate: enddate ? new moment.utc(enddate).format('MMMM Do YYYY') : null,
         category: liquor.get('category'),
-        discount: discount
+        discount: discount ? discount.toFixed(2)+"%" : null
       });
     });
     return liquors;
@@ -39,7 +35,7 @@ module.exports = App.DataTableView = Ember.View.extend({
           { "mData": "cursaleprice", "sTitle": "Sale Price" },
           { "mData": "cursaleenddate", "sTitle": "Sale End" },
           { "mData": "category", "sTitle": "Category" },
-          { "mData": "discount", "sTitle": "Discount %" }
+          { "mData": "discount", "sTitle": "Discount" }
       ]
     });
   }

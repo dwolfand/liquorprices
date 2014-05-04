@@ -45,9 +45,15 @@ app.get('/maxpercent', function(req, res) {
 
 app.get('/liquors', function(req, res) {
 	var collectionTarget = req.query.db || liquorPricesCollection;
-	datastore.getAllLiquors(liquorPricesCollection, req.query.limit, req.query.category, function(result){
-		res.json(result);
-	});
+	if (req.query.topsales){
+		datastore.getTopSales(liquorPricesCollection, req.query.limit, function(result){
+			res.json(result);
+		});
+	}else{
+		datastore.getAllLiquors(liquorPricesCollection, req.query.limit, req.query.category, req.query.mindiscount, function(result){
+			res.json(result);
+		});
+	}
 });
 
 app.get('/copycollection', function(req, res) {

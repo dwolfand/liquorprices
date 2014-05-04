@@ -58,6 +58,10 @@ var transformMocoObjToLPObj = function (source, curDate){
 		destination.cursaleprice = parseFloat(source.saleprice);
 		destination.cursaleenddate = tools.parseDate(source.saleenddate);
 	}
+	destination.discount = null;
+	if (source.cursaleprice){
+		destination.discount = 100 - ((source.cursaleprice/source.price) * 100);
+	}
 	destination.category = source.categoryname;
 	destination.imgsrc = source.imgsrc;
 	destination.longdescription = source.longdescription;
