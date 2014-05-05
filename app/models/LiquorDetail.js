@@ -4,7 +4,7 @@ var attr = DS.attr,
     hasMany = DS.hasMany,
     belongsTo = DS.belongsTo;
 
-module.exports = App.Liquor = DS.Model.extend({
+module.exports = App.LiquorDetail = DS.Model.extend({
   description: attr(),
   size: attr(),
   price: attr(),

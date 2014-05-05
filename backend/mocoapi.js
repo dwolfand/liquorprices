@@ -68,6 +68,22 @@ var transformMocoObjToLPObj = function (source, curDate){
 	destination.status = source.qtyStatus;	
 	destination.lastUpdated = curDate;
 	destination.createddate = curDate; //adding this field only for initial insert
+	destination.parentcategory = null;
+	if (source.categoryname.indexOf("VODKA") > -1){
+		destination.parentcategory = "VODKA";
+	}else if (source.categoryname.indexOf("SCOTCH") > -1){
+		destination.parentcategory = "SCOTCH";
+	}else if (source.categoryname.indexOf("WHISKEY") > -1 || source.categoryname.indexOf("BOURBON") > -1){
+		destination.parentcategory = "WHISKEY";
+	}else if (source.categoryname.indexOf("RUM") > -1){
+		destination.parentcategory = "RUM";
+	}else if (source.categoryname.indexOf("TEQUILA") > -1){
+		destination.parentcategory = "TEQUILA";
+	}else if (source.categoryname.indexOf("GIN") > -1){
+		destination.parentcategory = "GIN";
+	}else {
+		destination.parentcategory = "OTHER";
+	}
 	
 	return destination;
 };

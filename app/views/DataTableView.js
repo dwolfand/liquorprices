@@ -7,7 +7,7 @@ module.exports = App.DataTableView = Ember.View.extend({
       var enddate=liquor.get('cursaleenddate'),
         discount = liquor.get('discount');
       liquors.push({
-        description: liquor.get('description'),
+        description: '<a href="#/detail/'+liquor.get('id')+'">'+liquor.get('description')+'</a>',
         price: liquor.get('price'),
         size: liquor.get('size'),
         cursaleprice: liquor.get('cursaleprice'),
@@ -24,7 +24,7 @@ module.exports = App.DataTableView = Ember.View.extend({
     console.log("rendering liquor datatable");
     this.$().dataTable( {
       "bProcessing": true,
-      "aaData":this.data(this.get('content').content),
+      "aaData":this.data(this.get('content')),
       "bLengthChange": false,
       "iDisplayLength": 200,
       "aaSorting": [[ 6, "desc" ]],

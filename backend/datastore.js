@@ -27,6 +27,7 @@ module.exports = {
 			  cursaleenddate: 1,
 			  lastUpdated: 1,
 			  createddate: 1,
+			  parentcategory: 1,
 			  discount: 1};
         	options = {};
         	if (limit && limit > 0){
@@ -34,6 +35,14 @@ module.exports = {
         	}
 			collection.find(query,fields,options).toArray(function(err, results){
 				callback({"liquors":results});
+			});
+        });
+    },
+
+    getLiquorById: function(collectionTarget, _id, callback){
+        getCollection(collectionTarget, function(collection) {
+			collection.find({"_id":_id},{},{}).toArray(function(err, results){
+				callback({"liquorDetail":results[0]});
 			});
         });
     },
@@ -52,11 +61,13 @@ module.exports = {
 		  cursaleenddate: 1,
 		  lastUpdated: 1,
 		  createddate: 1,
+		  parentcategory: 1,
 		  discount: 1};
     	options = {sort:[["discount","desc"]],limit:3};
         getCollection(collectionTarget, function(collection) {
         	query.category = {"$in":"IMPORTED VODKA,DOMESTIC VODKA,IMPORTED VODKA FLAVORS,DOMESTIC VODKA FLAVORS".split(",")};
 			collection.find(query,fields,options).toArray(function(err, vodkaResults){
+				console.log(vodkaResults);
 				returnResults = returnResults.concat(vodkaResults);
 				query.category = {"$in":"IMPORTED SCOTCH,DOMESTIC SCOTCH,SINGLE MALT SCOTCH".split(",")};
 				collection.find(query,fields,options).toArray(function(err, scotchResults){
@@ -185,6 +196,7 @@ module.exports = {
 										imgsrc: sourceLiquor.imgsrc,
 										longdescription: sourceLiquor.longdescription,
 										status: sourceLiquor.status,
+										parentcategory: sourceLiquor.parentcategory,
 										lastUpdated: curDate},		
 									$addToSet: updates};
 									
@@ -199,6 +211,7 @@ module.exports = {
 									$set: {cursaleprice: sourceLiquor.cursaleprice,
 										cursaleenddate: sourceLiquor.cursaleenddate,
 										discount: sourceLiquor.discount,
+										parentcategory: sourceLiquor.parentcategory,
 										lastUpdated: curDate}};
 								collection.update({_id:sourceLiquor._id}, dbUpdates,function(err,rs) {
 										if (err){
@@ -293,6 +306,10 @@ var getUpdatesOnLiquorObjects = function(oldObj, newObj, curDate){
 	if (newObj.status !== oldObj.status){
 		errors.push({itemChanged:"status", oldValue:oldObj.status, newValue:newObj.status, changedDate:curDate});
 	}
+	// Leaving this out for now until categories get ironed out
+	// if (newObj.parentcategory !== oldObj.parentcategory){
+	// 	errors.push({itemChanged:"parentcategory", oldValue:oldObj.parentcategory, newValue:newObj.parentcategory, changedDate:curDate});
+	// }
 	
 	if (errors.length > 0){
 		updates.errors = {$each: errors};

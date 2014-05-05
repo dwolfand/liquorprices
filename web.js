@@ -56,6 +56,13 @@ app.get('/liquors', function(req, res) {
 	}
 });
 
+app.get('/liquorDetails/:_id', function(req, res) {
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	datastore.getLiquorById(liquorPricesCollection, req.param("_id"), function(result){
+		res.json(result);
+	});
+});
+
 app.get('/copycollection', function(req, res) {
 	datastore.copyCollection(req.query.from, req.query.to);
 	res.send("running...");
