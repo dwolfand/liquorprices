@@ -5,6 +5,7 @@ var attr = DS.attr,
     belongsTo = DS.belongsTo;
 
 module.exports = App.Sale = DS.Model.extend({
+  liquorDetail: belongsTo('liquorDetail'),
   saleprice: attr(),
   saleenddate: attr()
 });

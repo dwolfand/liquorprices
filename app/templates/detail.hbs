@@ -1,6 +1,34 @@
-<img src="http://www2.montgomerycountymd.gov/dlcsearch/{{unbound imgsrc}}" alt="some_text"></img>
-<br/>description: {{description}}
-<br/>price: {{price}}
-<br/>current sale price: {{cursaleprice}}
-<br/>sale end date: {{cursaleenddate}}
-<br/>discount: {{discount}}
+<div class="container-fluid detail-container">
+	<div class="row">
+	  <div class="col-xs-12 col-sm-4 image-col">
+	  	<img src="http://www2.montgomerycountymd.gov/dlcsearch/{{unbound imgsrc}}" alt="some_text"></img>
+	  </div>
+	  <div class="col-xs-12 col-sm-8">
+	  	<div class="row">
+	  		<div class="col-xs-6 col-sm-4 row-desc">Description</div>
+			<div class="col-xs-6 col-sm-8">{{description}}</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-4 row-desc">Price</div>
+			<div class="col-xs-6 col-sm-8">{{format-dollar price}}</div>
+		</div>
+		{{#if cursaleprice}}
+			<div class="row">
+				<div class="col-xs-6 col-sm-4 row-desc">Sale Price</div>
+				<div class="col-xs-6 col-sm-8">{{format-dollar cursaleprice}}</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6 col-sm-4 row-desc">Sale End Date</div>
+				<div class="col-xs-6 col-sm-8">{{format-normalized-date cursaleenddate}}</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6 col-sm-4 row-desc">Discount</div>
+				<div class="col-xs-6 col-sm-8">{{format-discount discount}}</div>
+			</div>
+		{{/if}}
+	  </div>
+	</div>
+	<div class="row">
+		{{view App.PriceTrendView contentBinding="content"}}
+	</div>
+</div>

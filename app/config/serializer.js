@@ -5,40 +5,55 @@ module.exports = (function() {
 		primaryKey: '_id'
 	});
 
-	//Ember.Inflector.inflector.irregular('sale', 'sale');
+	App.LiquorDetailSerializer = DS.RESTSerializer.extend({
+	  // extractSingle: function(store, type, oldPayload) {
+	  // 	console.log("extractSingle");
+	  // 	console.log(oldPayload);
 
-	// App.LiquorDetailSerializer = DS.RESTSerializer.extend({
-	//   extractSingle: function(store, type, oldPayload) {
-	//   	console.log("extractSingle");
-	//   	console.log(oldPayload);
+	  // 	this._super(store, type, oldPayload);
+	  // },
+	  // extractArray: function(store, type, payload, id, requestType) {
+	  // 	 console.log("extractArray");
+	  // 	// console.log(id);
+	  // 	// console.log(payload);
+	  // 	this._super(store, type, payload, id, requestType);
+	  // },
+	  normalizePayload: function(type, payload) {
+	  	console.log("normalizing liquor Payload");
+	  	//console.log(payload);
+	    var allSales = [];
+	    var allErrors = [];
 
-	//   	this._super(store, type, oldPayload);
-	//   },
-	//   extractArray: function(store, type, payload, id, requestType) {
-	//   	 console.log("extractArray");
-	//   	// console.log(id);
-	//   	// console.log(payload);
-	//   	this._super(store, type, payload, id, requestType);
-	//   },
-	//   normalizePayload: function(type, payload) {
-	//   	console.log("normalizing liquors Payload");
-	//   	//console.log(payload);
-	//     var allSales = [];
+	    var liquorDetail = payload.liquorDetail;
 
-	//     payload.liquors.forEach(function(liquor) {
-	//     	var tempSales = liquor.sale;
-	//     	liquor.id = liquor._id;
-	//     	liquor.sale = [];
-	//     	var count = 1;
-	//     	tempSales.forEach(function(sale) {
-	//     		sale._id = liquor._id+"-"+count;
-	//     		count++;
-	//     		liquor.sale.push(sale._id);
-	//     		allSales.push(sale);
-	//     	});
-	//     });
-	//     payload.sales = allSales;
-	//     return this._super(type, payload);
-	//   }
-	// })
+    	var tempSales = liquorDetail.sale;
+    	var tempErrors = liquorDetail.errors;
+    	liquorDetail.id = liquorDetail._id;
+    	liquorDetail.sales = [];
+    	liquorDetail.liquorerrors = [];
+    	var count = 1;
+    	
+    	if(tempSales){
+	    	tempSales.forEach(function(sale) {
+	    		sale._id = liquorDetail._id+"-"+count;
+	    		count++;
+	    		liquorDetail.sales.push(sale._id);
+	    		allSales.push(sale);
+	    	});
+	    }
+
+    	if(tempErrors){
+    		tempErrors.forEach(function(liquorError) {
+	    		liquorError._id = liquorDetail._id+"-"+count;
+	    		count++;
+	    		liquorDetail.liquorerrors.push(liquorError._id);
+	    		allErrors.push(liquorError);
+	    	});
+    	}
+    	
+	    payload.sales = allSales;
+	    payload.liquorErrors = allErrors;
+	    return this._super(type, payload);
+	  }
+	})
 }());
