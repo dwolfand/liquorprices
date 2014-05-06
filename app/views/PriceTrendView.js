@@ -61,6 +61,7 @@ module.exports = App.PriceTrendView = Ember.View.extend({
       labels: ['Sale Price','Normal Price'],
       ymin: ymin,
       ymax: ymax,
+      lineColors: ['#A52A2A', '#72A0C1'],
       xLabelFormat: function(d) { return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear(); },
       yLabelFormat: function (y) { return y ? '$'+ y : ''},
       dateFormat: function (x) { return new moment.utc(x).format('MM/DD/YYYY') }
