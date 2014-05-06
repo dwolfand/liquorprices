@@ -63,7 +63,7 @@ module.exports = App.PriceTrendView = Ember.View.extend({
       ymax: ymax,
       xLabelFormat: function(d) { return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear(); },
       yLabelFormat: function (y) { return y ? '$'+ y : ''},
-      dateFormat: function (x) { return new moment(x).format('MM/DD/YYYY') }
+      dateFormat: function (x) { return new moment.utc(x).format('MM/DD/YYYY') }
     });
   }
 });
