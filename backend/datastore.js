@@ -65,14 +65,29 @@ module.exports = {
 		  discount: 1};
     	options = {sort:[["discount","desc"]],limit:3};
         getCollection(collectionTarget, function(collection) {
-        	query.category = {"$in":"IMPORTED VODKA,DOMESTIC VODKA,IMPORTED VODKA FLAVORS,DOMESTIC VODKA FLAVORS".split(",")};
+        	query.parentcategory = {"$in":"VODKA".split(",")};
 			collection.find(query,fields,options).toArray(function(err, vodkaResults){
-				console.log(vodkaResults);
 				returnResults = returnResults.concat(vodkaResults);
-				query.category = {"$in":"IMPORTED SCOTCH,DOMESTIC SCOTCH,SINGLE MALT SCOTCH".split(",")};
+				query.parentcategory = {"$in":"SCOTCH".split(",")};
 				collection.find(query,fields,options).toArray(function(err, scotchResults){
 					returnResults = returnResults.concat(scotchResults);
-					callback({"liquors":returnResults});
+					query.parentcategory = {"$in":"RUM".split(",")};
+					collection.find(query,fields,options).toArray(function(err, rumResults){
+						returnResults = returnResults.concat(rumResults);
+						query.parentcategory = {"$in":"TEQUILA".split(",")};
+						collection.find(query,fields,options).toArray(function(err, tequilaResults){
+							returnResults = returnResults.concat(tequilaResults);
+							query.parentcategory = {"$in":"WHISKEY".split(",")};
+							collection.find(query,fields,options).toArray(function(err, whiskeyResults){
+								returnResults = returnResults.concat(whiskeyResults);
+								query.parentcategory = {"$in":"OTHER".split(",")};
+								collection.find(query,fields,options).toArray(function(err, otherResults){
+									returnResults = returnResults.concat(otherResults);
+									callback({"liquors":returnResults});
+								});
+							});
+						});
+					});
 				});
 			});
         });
