@@ -10,7 +10,7 @@ module.exports = App.DataTableView = Ember.View.extend({
       if (new moment(enddate).diff(new moment(), 'days') < 0)
         enddate = null;
       liquors.push({
-        description: '<a href="#/detail/'+liquor.get('id')+'">'+liquor.get('description')+'</a>',
+        description: '<a href="#/detail/'+liquor.get('id')+'">'+liquor.get('longdescription')+'</a>',
         price: "$" + liquor.get('price'),
         size: liquor.get('size'),
         cursaleprice: liquor.get('cursaleprice') ? "$"+liquor.get('cursaleprice') : null,
@@ -35,11 +35,11 @@ module.exports = App.DataTableView = Ember.View.extend({
       "aaSorting": [[ 4, "desc" ]],
       "aoColumns": [
           { "mData": "description", "sTitle": "Item"},
-          { "mData": "size", "sTitle": "Size", "sWidth":"3em" },
-          { "mData": "price", "sTitle": "Orig Price", "sWidth":"3em"},
-          { "mData": "cursaleprice", "sTitle": "Sale Price", "sWidth":"3em" },
-          { "mData": "savings", "sTitle": "Savings", "sWidth":"3em"},
-          { "mData": "discount", "sTitle": "Discount", "sWidth":"4em"},
+          { "mData": "size", "sTitle": "Size", "sWidth":"4em" },
+          { "mData": "price", "sTitle": "Orig Price", "sWidth":"4em"},
+          { "mData": "cursaleprice", "sTitle": "Sale Price", "sWidth":"4em" },
+          { "mData": "savings", "sTitle": "Savings", "sWidth":"5em"},
+          { "mData": "discount", "sTitle": "Discount", "sWidth":"5em"},
           { "mData": "saledaysleft", "sTitle": "Time Left", "sWidth":"7em"}
       ]
     });
