@@ -7,12 +7,16 @@ module.exports = App.DataTableView = Ember.View.extend({
     emberLiquors.forEach(function(liquor){
       var enddate=liquor.get('cursaleenddate'),
         discount = liquor.get('discount');
+      if (new moment(enddate).diff(new moment(), 'days') < 0)
+        enddate = null;
       liquors.push({
         description: '<a href="#/detail/'+liquor.get('id')+'">'+liquor.get('description')+'</a>',
-        price: liquor.get('price'),
+        price: "$" + liquor.get('price'),
         size: liquor.get('size'),
-        cursaleprice: liquor.get('cursaleprice'),
+        cursaleprice: liquor.get('cursaleprice') ? "$"+liquor.get('cursaleprice') : null,
         cursaleenddate: enddate ? new moment.utc(enddate).format('MMMM Do YYYY') : null,
+        saledaysleft: enddate ? (new moment(enddate).diff(new moment(), 'days'))+" Days Left" : null,
+        savings: enddate ? "$"+(liquor.get('price') - liquor.get('cursaleprice')).toFixed(2) : null,
         category: liquor.get('category'),
         discount: discount ? discount.toFixed(2)+"%" : null
       });
@@ -27,15 +31,15 @@ module.exports = App.DataTableView = Ember.View.extend({
       "aaData":this.data(this.get('content')),
       "bLengthChange": false,
       "iDisplayLength": 200,
-      "aaSorting": [[ 6, "desc" ]],
+      "aaSorting": [[ 4, "desc" ]],
       "aoColumns": [
           { "mData": "description", "sTitle": "Description"},
-          { "mData": "price", "sTitle": "Price" },
           { "mData": "size", "sTitle": "Size" },
+          { "mData": "price", "sTitle": "Orig Price" },
           { "mData": "cursaleprice", "sTitle": "Sale Price" },
-          { "mData": "cursaleenddate", "sTitle": "Sale End" },
-          { "mData": "category", "sTitle": "Category" },
-          { "mData": "discount", "sTitle": "Discount" }
+          { "mData": "savings", "sTitle": "Savings" },
+          { "mData": "discount", "sTitle": "Discount" },
+          { "mData": "saledaysleft", "sTitle": "Days Left" }
       ]
     });
   },
