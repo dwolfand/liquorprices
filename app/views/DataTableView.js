@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = App.DataTableView = Ember.View.extend({
+  templateName: 'data-table-view',
   data: function(emberLiquors){
     var liquors = [];
     emberLiquors.forEach(function(liquor){
@@ -18,11 +19,10 @@ module.exports = App.DataTableView = Ember.View.extend({
     });
     return liquors;
   },
-  tagName:'table',
   didInsertElement: function(){
     var self = this;
     console.log("rendering liquor datatable");
-    this.$().dataTable( {
+    $('#data-table-container').dataTable( {
       "bProcessing": true,
       "aaData":this.data(this.get('content')),
       "bLengthChange": false,
@@ -38,5 +38,8 @@ module.exports = App.DataTableView = Ember.View.extend({
           { "mData": "discount", "sTitle": "Discount" }
       ]
     });
-  }
+  },
+  myObserver: function(){
+      this.rerender();
+    }.observes('context.model')
 });

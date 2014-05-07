@@ -50,7 +50,7 @@ app.get('/liquors', function(req, res) {
 			res.json(result);
 		});
 	}else{
-		datastore.getAllLiquors(liquorPricesCollection, req.query.limit, req.query.category, req.query.mindiscount, function(result){
+		datastore.getAllLiquors(liquorPricesCollection, req.query.limit, req.query.category, req.query.parentcategory, req.query.mindiscount, function(result){
 			res.json(result);
 		});
 	}
