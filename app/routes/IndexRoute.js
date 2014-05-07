@@ -6,9 +6,11 @@ module.exports = App.IndexRoute = Ember.Route.extend({
 		return liquors;
 	},
 	setupController: function(controller, model) {
+      //first pass in the model to the controller to set it up
       this._super(controller, model);
       var liquors = {};
       var allLiquors = model.get("content");
+      //then iterate through the liquors and categorize them for display
       allLiquors.forEach(function(liquor){
       	if (!liquors[liquor.get("parentcategory")]){
       		liquors[liquor.get("parentcategory")] = [];

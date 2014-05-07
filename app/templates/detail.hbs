@@ -1,6 +1,6 @@
 <div class="detail-container">
 	<div class="row">
-	  <div class="col-xs-12 col-sm-4 image-col">
+	  <div class="col-xs-12 col-sm-4 image-col center-col-contents">
 	  	<img src="http://www2.montgomerycountymd.gov/dlcsearch/{{unbound imgsrc}}" alt="some_text"></img>
 	  </div>
 	  <div class="col-xs-12 col-sm-8">
@@ -31,10 +31,14 @@
 	<div class="row">
 		{{view App.PriceTrendView contentBinding="content"}}
 	</div>
-		<div class="row graph-key">
-		<div class="col-xs-1"><div class="saleprice-circle-key"></div></div>
-		<div class="col-xs-11">Sale Price Trend</div>
-		<div class="col-xs-1"><div class="normalprice-circle-key"></div></div>
-		<div class="col-xs-11">Normal Price Trend</div>
+	<div class="row graph-key">
+		<div class="row">
+			<div class="col-xs-1  col-xs-offset-1"><div class="saleprice-circle-key"></div></div>
+			<div class="col-xs-10">Sale Price Trend</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-1 col-xs-offset-1"><div class="normalprice-circle-key"></div></div>
+			<div class="col-xs-10">Normal Price Trend</div>
+		</div>
 	</div>
 </div>

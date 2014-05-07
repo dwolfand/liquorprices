@@ -1,7 +1,14 @@
-{{view App.DataTableView contentBinding="liquors.VODKA"}}
-{{view App.DataTableView contentBinding="liquors.SCOTCH"}}
-{{view App.DataTableView contentBinding="liquors.RUM"}}
-{{view App.DataTableView contentBinding="liquors.TEQUILA"}}
-{{view App.DataTableView contentBinding="liquors.WHISKEY"}}
-{{view App.DataTableView contentBinding="liquors.OTHER"}}
+<div class="row">
+	<div class="col-xs-12 page-title">
+		Best Discounts for {{today}}
+	</div>
+</div>
+
+{{view App.SaleSummaryRowView liquorBinding="liquors.SCOTCH" liquorTitleBinding="scotchTitle"}}
+{{view App.SaleSummaryRowView liquorBinding="liquors.VODKA" liquorTitleBinding="vodkaTitle"}}
+{{view App.SaleSummaryRowView liquorBinding="liquors.TEQUILA" liquorTitleBinding="tequilaTitle"}}
+{{view App.SaleSummaryRowView liquorBinding="liquors.RUM" liquorTitleBinding="rumTitle"}}
+{{view App.SaleSummaryRowView liquorBinding="liquors.WHISKEY" liquorTitleBinding="whiskeyTitle"}}
+{{view App.SaleSummaryRowView liquorBinding="liquors.OTHER" liquorTitleBinding="otherTitle"}}
+
 {{outlet}}

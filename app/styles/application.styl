@@ -2,15 +2,20 @@
 
 //Add some whitespace to the whole app
 html, body
-  margin 1em
+  margin .5em
 
 //Make sure that images are fit to the column size
 .image-col img
   max-width 100%
   text-align center
-.image-col
+.center-col-contents
   max-width 100%
   text-align center
+
+//Add this to the bootstrap class to center the column
+.col-centered
+  float none
+  margin 0 auto
 
 //At some point the page becomes too big, keep it max to 1200px
 .application-container
@@ -35,3 +40,26 @@ html, body
   height 16px
   background #72A0C1
   border: 3px solid #72A0C1;
+
+.sale-price
+  color #C3072D
+  font-weight bold
+
+.section-row-title
+  background-color #A2A4C0
+  color black
+  font-weight bold
+  font-size large
+  text-align center
+
+.index-image-col img
+  height 8em
+  text-align center
+
+.top-buffer
+  margin-top 2em
+
+.page-title
+  font-weight bold
+  font-size large
+  text-align center
