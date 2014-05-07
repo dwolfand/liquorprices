@@ -31,15 +31,16 @@ module.exports = App.DataTableView = Ember.View.extend({
       "aaData":this.data(this.get('content')),
       "bLengthChange": false,
       "iDisplayLength": 200,
+      "bSortClasses": false,
       "aaSorting": [[ 4, "desc" ]],
       "aoColumns": [
-          { "mData": "description", "sTitle": "Description"},
-          { "mData": "size", "sTitle": "Size" },
-          { "mData": "price", "sTitle": "Orig Price" },
-          { "mData": "cursaleprice", "sTitle": "Sale Price" },
-          { "mData": "savings", "sTitle": "Savings" },
-          { "mData": "discount", "sTitle": "Discount" },
-          { "mData": "saledaysleft", "sTitle": "Days Left" }
+          { "mData": "description", "sTitle": "Item"},
+          { "mData": "size", "sTitle": "Size", "sWidth":"3em" },
+          { "mData": "price", "sTitle": "Orig Price", "sWidth":"3em"},
+          { "mData": "cursaleprice", "sTitle": "Sale Price", "sWidth":"3em" },
+          { "mData": "savings", "sTitle": "Savings", "sWidth":"3em"},
+          { "mData": "discount", "sTitle": "Discount", "sWidth":"4em"},
+          { "mData": "saledaysleft", "sTitle": "Time Left", "sWidth":"7em"}
       ]
     });
   },
