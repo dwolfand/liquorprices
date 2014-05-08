@@ -177,6 +177,17 @@ module.exports = {
 		});
 	},
 
+	logRunEvent: function(targetCollection, curDate){
+		getCollection(targetCollection+"-log", function(collection) {
+			collection.update({type:"DBLoadEvent"}, {'$set':{type:"DBLoadEvent"}, '$push': {'runs':curDate}}, {upsert:true, w: 1}, function(err, result) {
+				if (err){
+					console.log("error adding the DBLoadEvent");
+					console.log(err);
+				}
+			});
+		});
+	},
+
 	loadLiquorsIntoDB: function(sourceLiquors, curDate, collectionTarget){
 		getCollection(collectionTarget, function(collection) {
 			//collection.remove({},function(err, removed){

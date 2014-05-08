@@ -26,7 +26,9 @@ app.use(express.static(__dirname + '/public'));
 app.get('/loaddb', function(req, res) {
 	var recordsToImport = req.query.num || 20;
 	var collectionTarget = req.query.db || liquorPricesCollection;
-	mocoapi.getAllLiquors(new Date(), recordsToImport, collectionTarget, datastore.loadLiquorsIntoDB);
+	var curDate = new Date();
+	datastore.logRunEvent(collectionTarget, curDate);
+	mocoapi.getAllLiquors(curDate, recordsToImport, collectionTarget, datastore.loadLiquorsIntoDB);
 	res.send('importing underwayyyyy');
 });
 
