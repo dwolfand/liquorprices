@@ -141,7 +141,7 @@ var transformMocoObjToLPObj = function (source, curDate){
 		destination.parentcategory = "VODKA";
 	}else if (source.categoryname.indexOf("SCOTCH") > -1){
 		destination.parentcategory = "SCOTCH";
-	}else if (source.categoryname.indexOf("WHISKEY") > -1 || source.categoryname.indexOf("BOURBON") > -1){
+	}else if (source.categoryname.indexOf("WHISKEY") > -1 || source.categoryname.indexOf("BOURBON") > -1 || source.categoryname.indexOf("BOTTLED IN BOND") > -1){
 		destination.parentcategory = "WHISKEY";
 	}else if (source.categoryname.indexOf("RUM") > -1){
 		destination.parentcategory = "RUM";
@@ -149,6 +149,35 @@ var transformMocoObjToLPObj = function (source, curDate){
 		destination.parentcategory = "TEQUILA";
 	}else if (source.categoryname.indexOf("GIN") > -1){
 		destination.parentcategory = "GIN";
+	}else if (source.categoryname.indexOf("COGNAC") > -1 || source.categoryname.indexOf("BRANDY") > -1 
+			  || source.categoryname.indexOf("GRAPPA") > -1 || source.categoryname.indexOf("DOMESTIC CORDIALS") > -1
+			  || source.categoryname.indexOf("IMPORTED CORDIALS") > -1 || source.categoryname.indexOf("ARMAGNAC")  > -1){
+		destination.parentcategory = "OTHER_LIQUORS";
+	}else if (source.categoryname.indexOf("SPARKLING") > -1 || source.categoryname.indexOf("CHAMPAGNE") > -1){
+		destination.parentcategory = "SPARKLING_WINE";
+	}else if (source.categoryname.indexOf("AMERICAN BLUSH") > -1 || source.categoryname.indexOf("AMERICAN RED") > -1 
+			  || source.categoryname.indexOf("AMERICAN WHITE") > -1 || source.categoryname.indexOf("AMERICAN TABLE WINE") > -1){
+		destination.parentcategory = "AMERICAN_WINE";
+	}else if (source.categoryname.indexOf("ARGENTINA") > -1 || source.categoryname.indexOf("ASIAN") > -1 
+			  || source.categoryname.indexOf("AUSTRALIAN") > -1 || source.categoryname.indexOf("CHILE") > -1
+			  || source.categoryname.indexOf("GERMAN WINE") > -1 || source.categoryname.indexOf("GREEK") > -1 
+			  || source.categoryname.indexOf("ITALIAN RED WINE") > -1 || source.categoryname.indexOf("ITALIAN ROSE WINE") > -1
+			  || source.categoryname.indexOf("ITALIAN WHITE WINE") > -1 || source.categoryname.indexOf("KOSHER") > -1 
+			  || source.categoryname.indexOf("NEW ZEALAND") > -1 || source.categoryname.indexOf("SOUTH AFRICAN") > -1
+			  || source.categoryname.indexOf("SPANISH/PORTUGUESE") > -1){
+		destination.parentcategory = "IMPORTED_WINE";
+	}else if (source.categoryname.indexOf("FRANCE-OTHER") > -1 || source.categoryname.indexOf("FRENCH BLUSH") > -1 
+			  || source.categoryname.indexOf("LOIRE VALLEY WINE") > -1 || source.categoryname.indexOf("RED BORDEAUX WINE") > -1
+			  || source.categoryname.indexOf("RED BURGUNDY WINE") > -1 || source.categoryname.indexOf("RHONE RED WINE") > -1 
+			  || source.categoryname.indexOf("RHONE WHITE WINE") > -1 || source.categoryname.indexOf("WHITE BORDEAUX WINE") > -1
+			  || source.categoryname.indexOf("WHITE BURGUNDY WINE") > -1 || source.categoryname.indexOf("ALSATIAN WINE") > -1){
+		destination.parentcategory = "FRENCH_WINE";
+	}else if (source.categoryname.indexOf("PORT") > -1 || source.categoryname.indexOf("SHERRY") > -1 
+			  || source.categoryname.indexOf("DESSERT") > -1 || source.categoryname.indexOf("VERMOUTH") > -1
+			  || source.categoryname.indexOf("APERITIF") > -1){
+		destination.parentcategory = "OTHER_WINE";
+	}else if (source.categoryname.indexOf("NON-ALCOHOLIC MIXERS") > -1 || source.categoryname.indexOf("PRE-MIX COCKTAILS") > -1){
+		destination.parentcategory = "MIXERS";
 	}else {
 		destination.parentcategory = "OTHER";
 	}
