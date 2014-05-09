@@ -13,21 +13,21 @@ var LOCATIONS = [];
 	LOCATIONS['potomac'] = {displayName: 'Potomac', lat:'39.0177848', lon:'-77.208583', addr1:'10132 River Road', addr2:'Potomac, MD 20854'};
 	LOCATIONS['kensington'] = {displayName: 'Kensington', lat:'39.0336747', lon:'-77.0728248', addr1:'3733 University Boulevard', addr2:'Kensington, MD 20895'};
 	LOCATIONS['white_oak'] = {displayName: 'White Oak', lat:'39.0419057', lon:'-76.9913832', addr1:'11239 New Hampshire Avenue', addr2:'Silver Spring, MD 20904'};
-	LOCATIONS['wheaton'] = {displayName: 'Wheaton', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['montrose'] = {displayName: 'Montrose', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['rockville_pike'] = {displayName: 'Rockville Pike', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['leisure_world'] = {displayName: 'Leisure World', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['cloverly'] = {displayName: 'Cloverly', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['cabin_john'] = {displayName: 'Cabin_john', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['fallsgrove'] = {displayName: 'Fallsgrove', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['muddy_branch'] = {displayName: 'Muddy Branch', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['darnestown'] = {displayName: 'Darnestown', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['kingsview'] = {displayName: 'Kingsview', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['walnut_hill'] = {displayName: 'Walnut Hill', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['goshen_crossing'] = {displayName: 'Goshen Crossing', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['milestone'] = {displayName: 'Milestone', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['seneca_meadows'] = {displayName: 'Seneca Meadows', lat:'', lon:'', addr1:'', addr2:''};
-	LOCATIONS['olney'] = {displayName: 'Olney', lat:'', lon:'', addr1:'', addr2:''};
+	LOCATIONS['wheaton'] = {displayName: 'Wheaton', lat:'39.0418833', lon:'-77.0513425', addr1:'11407 Georgia Avenue', addr2:'Silver Spring, MD 20902'};
+	LOCATIONS['montrose'] = {displayName: 'Montrose', lat:'39.0543159', lon:'-77.1149852', addr1:'12015-B Rockville Pike', addr2:'Rockville, MD 20852'};
+	LOCATIONS['rockville_pike'] = {displayName: 'Rockville Pike', lat:'39.076244', lon:'-77.137468', addr1:'832-836 Rockville Pike', addr2:'Rockville, MD 20852'};
+	LOCATIONS['leisure_world'] = {displayName: 'Leisure World', lat:'39.1036888', lon:'-77.0756899', addr1:'3824-26 International Drive', addr2:'Silver Spring, MD 20906'};
+	LOCATIONS['cloverly'] = {displayName: 'Cloverly', lat:'39.109519', lon:'-76.996401', addr1:'723 Cloverly St', addr2:'Silver Spring, MD 20905'};
+	LOCATIONS['cabin_john'] = {displayName: 'Cabin John', lat:'39.0407502', lon:'-77.1590372', addr1:'11301 Seven Locks Road', addr2:'Potomac, MD 20854'};
+	LOCATIONS['fallsgrove'] = {displayName: 'Fallsgrove', lat:'39.0980007', lon:'-77.1934896', addr1:'14937E Shady Grove Road', addr2:'Rockville, MD 20850'};
+	LOCATIONS['muddy_branch'] = {displayName: 'Muddy Branch', lat:'39.1145466', lon:'-77.2159264', addr1:'866 Muddy Branch Road', addr2:'Gaithersburg, MD 20878'};
+	LOCATIONS['darnestown'] = {displayName: 'Darnestown', lat:'39.1175073', lon:'-77.2512663', addr1:'12155 Darnestown Road', addr2:'Gaithersburg, MD 20878'};
+	LOCATIONS['kingsview'] = {displayName: 'Kingsview', lat:'39.1585545', lon:'-77.2792207', addr1:'18323 Leaman Farm Road F-1', addr2:'Germantown, MD 20874'};
+	LOCATIONS['walnut_hill'] = {displayName: 'Walnut Hill', lat:'39.126327', lon:'-77.183149', addr1:'16535 S. Frederick Road', addr2:'Gaithersburg, MD 20855'};
+	LOCATIONS['goshen_crossing'] = {displayName: 'Goshen Crossing', lat:'39.1853596', lon:'-77.1874469', addr1:'20004-20008 Goshen Road', addr2:'Gaithersburg, MD 20879'};
+	LOCATIONS['milestone'] = {displayName: 'Milestone', lat:'39.2019721', lon:'-77.2456464', addr1:'20946 Frederick Road Unit D1', addr2:'Germantown, MD 20876'};
+	LOCATIONS['seneca_meadows'] = {displayName: 'Seneca Meadows', lat:'39.203053', lon:'-77.246989', addr1:'20680 Seneca Meadows Parkway, Suite A-2', addr2:'Germantown, MD 20876'};
+	LOCATIONS['olney'] = {displayName: 'Olney', lat:'39.149837', lon:'-77.06628', addr1:'17825 Georgia Avenue', addr2:'Olney, MD 20832'};
 
 module.exports = {
   getAllLiquors: function (curDate, recordsToImport, collectionTarget, callback) {
@@ -78,7 +78,7 @@ module.exports = {
 	var requestCallback = function(error, response, body) {
 		if (!error && response.statusCode == 200) {
 			var results = parseInventory(body.d);
-			console.log(results);
+			//console.log(results);
 			callback(results);
 		}
 		else{
