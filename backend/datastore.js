@@ -42,10 +42,14 @@ module.exports = {
         });
     },
 
-    getLiquorById: function(collectionTarget, _id, callback){
+    getLiquorById: function(collectionTarget, _id, inventoryFunction, callback){
         getCollection(collectionTarget, function(collection) {
 			collection.find({"_id":_id},{},{}).toArray(function(err, results){
-				callback({"liquorDetail":results[0]});
+				inventoryFunction(_id, function(inventoryResult){
+					var result = results[0];
+					result.inventory = inventoryResult;
+					callback({"liquorDetail":result});
+				});
 			});
         });
     },

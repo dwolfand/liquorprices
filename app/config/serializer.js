@@ -23,14 +23,17 @@ module.exports = (function() {
 	  	//console.log(payload);
 	    var allSales = [];
 	    var allErrors = [];
+	    var allInventory = [];
 
 	    var liquorDetail = payload.liquorDetail;
 
     	var tempSales = liquorDetail.sale;
     	var tempErrors = liquorDetail.errors;
+    	var tempInventory = liquorDetail.inventory;
     	liquorDetail.id = liquorDetail._id;
     	liquorDetail.sales = [];
     	liquorDetail.liquorerrors = [];
+    	liquorDetail.inventory = [];
     	var count = 1;
     	
     	if(tempSales){
@@ -50,9 +53,19 @@ module.exports = (function() {
 	    		allErrors.push(liquorError);
 	    	});
     	}
+
+    	if(tempInventory){
+    		tempInventory.forEach(function(inventory) {
+	    		inventory._id = liquorDetail._id+"-"+count;
+	    		count++;
+	    		liquorDetail.inventory.push(inventory._id);
+	    		allInventory.push(inventory);
+	    	});
+    	}
     	
 	    payload.sales = allSales;
 	    payload.liquorErrors = allErrors;
+	    payload.inventory = allInventory;
 	    return this._super(type, payload);
 	  }
 	})

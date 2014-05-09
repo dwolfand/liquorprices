@@ -32,6 +32,13 @@ app.get('/loaddb', function(req, res) {
 	res.send('importing underwayyyyy');
 });
 
+app.get('/inventory/:_id', function(req, res) {
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	mocoapi.getInventoryForItem(req.param("_id"), function(result){
+		res.json(result);
+	});
+});
+
 app.get('/finddiff', function(req, res) {
 	datastore.findDiff(function(diff){
 		res.send(diff.toString());
@@ -60,7 +67,7 @@ app.get('/liquors', function(req, res) {
 
 app.get('/liquorDetails/:_id', function(req, res) {
 	var collectionTarget = req.query.db || liquorPricesCollection;
-	datastore.getLiquorById(liquorPricesCollection, req.param("_id"), function(result){
+	datastore.getLiquorById(liquorPricesCollection, req.param("_id"), mocoapi.getInventoryForItem, function(result){
 		res.json(result);
 	});
 });

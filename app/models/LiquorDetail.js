@@ -19,5 +19,6 @@ module.exports = App.LiquorDetail = DS.Model.extend({
   discount: attr(),
   parentcategory: attr(),
   sales: hasMany('sale'),
-  liquorerrors: hasMany('liquorError')
+  liquorerrors: hasMany('liquorError'),
+  inventory: hasMany('inventory')
 });
