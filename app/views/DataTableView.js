@@ -30,7 +30,7 @@ module.exports = App.DataTableView = Ember.View.extend({
       "bProcessing": true,
       "aaData":this.data(this.get('content')),
       "bLengthChange": false,
-      "iDisplayLength": 200,
+      "iDisplayLength": 100,
       "bSortClasses": false,
       "aaSorting": [[ 4, "desc" ]],
       "aoColumns": [
