@@ -326,15 +326,15 @@ var getUpdatesOnLiquorObjects = function(oldObj, newObj, curDate){
 	if (newObj.category !== oldObj.category){
 		errors.push({itemChanged:"category", oldValue:oldObj.category, newValue:newObj.category, changedDate:curDate});
 	}
-	if (newObj.imgsrc !== oldObj.imgsrc){
-		errors.push({itemChanged:"imgsrc", oldValue:oldObj.imgsrc, newValue:newObj.imgsrc, changedDate:curDate});
-	}
+	// if (newObj.imgsrc !== oldObj.imgsrc){
+	// 	errors.push({itemChanged:"imgsrc", oldValue:oldObj.imgsrc, newValue:newObj.imgsrc, changedDate:curDate});
+	// }
 	if (newObj.longdescription !== oldObj.longdescription){
 		errors.push({itemChanged:"longdescription", oldValue:oldObj.longdescription, newValue:newObj.longdescription, changedDate:curDate});
 	}
-	if (newObj.status !== oldObj.status){
-		errors.push({itemChanged:"status", oldValue:oldObj.status, newValue:newObj.status, changedDate:curDate});
-	}
+	// if (newObj.status !== oldObj.status){
+	// 	errors.push({itemChanged:"status", oldValue:oldObj.status, newValue:newObj.status, changedDate:curDate});
+	// }
 	// Leaving this out for now until categories get ironed out
 	// if (newObj.parentcategory !== oldObj.parentcategory){
 	// 	errors.push({itemChanged:"parentcategory", oldValue:oldObj.parentcategory, newValue:newObj.parentcategory, changedDate:curDate});
