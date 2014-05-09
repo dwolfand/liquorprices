@@ -70,7 +70,7 @@ module.exports = {
 		  createddate: 1,
 		  parentcategory: 1,
 		  discount: 1};
-    	options = {sort:[["discount","desc"]],limit:3};
+    	options = {sort:[["discount","desc"]],limit:limit};
         getCollection(collectionTarget, function(collection) {
         	query.parentcategory = {"$in":"VODKA".split(",")};
 			collection.find(query,fields,options).toArray(function(err, vodkaResults){

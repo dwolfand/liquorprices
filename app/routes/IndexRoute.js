@@ -2,7 +2,7 @@
 
 module.exports = App.IndexRoute = Ember.Route.extend({
 	model: function() {
-		var liquors = this.store.find('liquor',{topsales:true,limit:30});
+		var liquors = this.store.find('liquor',{topsales:true,limit:4});
 		return liquors;
 	},
 	setupController: function(controller, model) {
