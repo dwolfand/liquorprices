@@ -33,7 +33,6 @@ app.get('/loaddb', function(req, res) {
 });
 
 app.get('/inventory/:_id', function(req, res) {
-	var collectionTarget = req.query.db || liquorPricesCollection;
 	mocoapi.getInventoryForItem(req.param("_id"), function(result){
 		res.json(result);
 	});
@@ -59,7 +58,7 @@ app.get('/liquors', function(req, res) {
 			res.json(result);
 		});
 	}else{
-		datastore.getAllLiquors(liquorPricesCollection, req.query.limit, req.query.category, req.query.parentcategory, req.query.mindiscount, function(result){
+		datastore.getAllLiquors(liquorPricesCollection, req.query.limit, req.query.category, req.query.parentcategory, req.query.searchString, req.query.mindiscount, function(result){
 			res.json(result);
 		});
 	}

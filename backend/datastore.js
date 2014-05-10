@@ -7,7 +7,7 @@ var dbConnection;
 var collections = {};
 
 module.exports = {
-    getAllLiquors: function(collectionTarget, limit, category, parentcategory, mindiscount, callback){
+    getAllLiquors: function(collectionTarget, limit, category, parentcategory, searchString, mindiscount, callback){
         getCollection(collectionTarget, function(collection) {
         	query = {};
         	if (category){
@@ -15,6 +15,9 @@ module.exports = {
         	}
         	if (parentcategory){
         		query.parentcategory = {"$in":parentcategory.split(",")};
+        	}
+        	if (searchString){
+        		query.longdescription = new RegExp('.*'+searchString+'.*', "i");
         	}
         	if (mindiscount){
         		query.discount = {"$gt":parseFloat(mindiscount)};

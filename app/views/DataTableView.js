@@ -32,6 +32,7 @@ module.exports = App.DataTableView = Ember.View.extend({
       "bLengthChange": false,
       "iDisplayLength": 100,
       "bSortClasses": false,
+      "bFilter": false,
       "aaSorting": [[ 4, "desc" ]],
       "aoColumns": [
           { "mData": "description", "sTitle": "Item"},

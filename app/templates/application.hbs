@@ -51,8 +51,11 @@
           </ul>
         </li>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">About Us</a></li>
+      <ul class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          {{input type="text" action="search" value=searchstring}}
+        </div>
+        <button {{action 'search'}}>Search</button>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
