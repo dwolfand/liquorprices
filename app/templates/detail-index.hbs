@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-4 image-col center-col-contents">
+  	<img src="http://www2.montgomerycountymd.gov/dlcsearch/{{unbound imgsrc}}" alt="some_text"></img>
+  </div>
+  <div class="col-xs-12 col-sm-8">
+  	<div class="row">
+  		<div class="col-xs-6 col-sm-4 row-desc">Description</div>
+		<div class="col-xs-6 col-sm-8">{{longdescription}}</div>
+	</div>
+	<div class="row">
+  		<div class="col-xs-6 col-sm-4 row-desc">Size</div>
+		<div class="col-xs-6 col-sm-8">{{size}}</div>
+	</div>
+	<div class="row">
+  		<div class="col-xs-6 col-sm-4 row-desc">Category</div>
+		<div class="col-xs-6 col-sm-8">{{parentcategory}}-->{{category}}</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-6 col-sm-4 row-desc">Price</div>
+		<div class="col-xs-6 col-sm-8">{{format-dollar price}}</div>
+	</div>
+	{{#if cursaleprice}}
+		<div class="row">
+			<div class="col-xs-6 col-sm-4 row-desc">Sale Price</div>
+			<div class="col-xs-6 col-sm-8">{{format-dollar cursaleprice}}</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-4 row-desc">Sale End Date</div>
+			<div class="col-xs-6 col-sm-8">{{format-normalized-date cursaleenddate}}</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-6 col-sm-4 row-desc">Discount</div>
+			<div class="col-xs-6 col-sm-8">{{format-discount discount}}</div>
+		</div>
+	{{/if}}
+	<div class="row">
+		<div class="col-xs-6 col-sm-4 row-desc">Last Updated</div>
+		<div class="col-xs-6 col-sm-8">{{format-normalized-date lastUpdated}}</div>
+	</div>
+  </div>
+</div>

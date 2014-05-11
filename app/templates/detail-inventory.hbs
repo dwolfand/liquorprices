@@ -1,0 +1,15 @@
+
+<div class="row top-buffer">
+	<div class="row">
+		<div class="col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 section-row-title">Location</div>
+		<div class="col-xs-5 col-sm-4 section-row-title">Quantity</div>
+	</div>
+	{{#each inventory}}
+		<div class="row">
+			<div class="col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 center-text">
+				<a target="_blank" href="http://maps.google.com/maps?q={{unbound addr1}},{{unbound addr2}}">{{displayName}}</a>
+			</div>
+			<div class="col-xs-5 col-sm-4 center-text">{{count}}</div>
+		</div>
+	{{/each}}
+</div>

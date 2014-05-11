@@ -1,73 +1,18 @@
-<div class="detail-container">
-	<div class="row">
-	  <div class="col-xs-12 col-sm-4 image-col center-col-contents">
-	  	<img src="http://www2.montgomerycountymd.gov/dlcsearch/{{unbound imgsrc}}" alt="some_text"></img>
-	  </div>
-	  <div class="col-xs-12 col-sm-8">
-	  	<div class="row">
-	  		<div class="col-xs-6 col-sm-4 row-desc">Description</div>
-			<div class="col-xs-6 col-sm-8">{{longdescription}}</div>
-		</div>
-		<div class="row">
-	  		<div class="col-xs-6 col-sm-4 row-desc">Size</div>
-			<div class="col-xs-6 col-sm-8">{{size}}</div>
-		</div>
-		<div class="row">
-	  		<div class="col-xs-6 col-sm-4 row-desc">Category</div>
-			<div class="col-xs-6 col-sm-8">{{parentcategory}}-->{{category}}</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-6 col-sm-4 row-desc">Price</div>
-			<div class="col-xs-6 col-sm-8">{{format-dollar price}}</div>
-		</div>
-		{{#if cursaleprice}}
-			<div class="row">
-				<div class="col-xs-6 col-sm-4 row-desc">Sale Price</div>
-				<div class="col-xs-6 col-sm-8">{{format-dollar cursaleprice}}</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-6 col-sm-4 row-desc">Sale End Date</div>
-				<div class="col-xs-6 col-sm-8">{{format-normalized-date cursaleenddate}}</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-6 col-sm-4 row-desc">Discount</div>
-				<div class="col-xs-6 col-sm-8">{{format-discount discount}}</div>
-			</div>
-		{{/if}}
-		<div class="row">
-			<div class="col-xs-6 col-sm-4 row-desc">Last Updated</div>
-			<div class="col-xs-6 col-sm-8">{{format-normalized-date lastUpdated}}</div>
-		</div>
-	  </div>
-	</div>
-	<div class="row">
-		{{view App.PriceTrendView contentBinding="content"}}
-	</div>
-	<div class="row graph-key">
-		<div class="row">
-			<div class="col-xs-1  col-xs-offset-1"><div class="saleprice-circle-key"></div></div>
-			<div class="col-xs-10">Sale Price Trend</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-1 col-xs-offset-1"><div class="normalprice-circle-key"></div></div>
-			<div class="col-xs-10">Normal Price Trend</div>
-		</div>
-	</div>
-	<div class="row top-buffer">
-		<div class="col-xs-10 col-sm-8 col-centered">{{view App.InventoryMapView contentBinding="content"}}</div>
-	</div>
-	<div class="row top-buffer">
-		<div class="row">
-			<div class="col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 section-row-title">Location</div>
-			<div class="col-xs-5 col-sm-4 section-row-title">Quantity</div>
-		</div>
-		{{#each inventory}}
-		<div class="row">
-			<div class="col-xs-5 col-xs-offset-1 col-sm-4 col-sm-offset-2 center-text">
-				<a target="_blank" href="http://maps.google.com/maps?q={{unbound addr1}},{{unbound addr2}}">{{displayName}}</a>
-			</div>
-			<div class="col-xs-5 col-sm-4 center-text">{{count}}</div>
-		</div>
-		{{/each}}
+<div class="container">
+	<div class="row row-offcanvas row-offcanvas-left">
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+      <div class="list-group">
+        <a {{action 'gotopage' 'details'}} class="list-group-item active" id="details">Details</a>
+        <a {{action 'gotopage' 'price'}} class="list-group-item" id="price">Price Trend</a>
+        <a {{action 'gotopage' 'map'}} class="list-group-item" id="map">Map</a>
+        <a {{action 'gotopage' 'inventory'}} class="list-group-item" id="inventory">Inventory</a>
+      </div>
+    </div>
+		<div class="col-xs-12 col-sm-9">
+  		<p class="sidenav-toggle-button visible-xs">
+  	        <button {{action 'toggle_side_nav'}} class="btn btn-primary btn-xs">>></button>
+  	      </p>
+  		{{outlet}}
+  	</div>
 	</div>
 </div>
