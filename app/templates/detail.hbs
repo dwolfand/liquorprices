@@ -6,12 +6,13 @@
         <a {{action 'gotopage' 'price'}} class="list-group-item" id="price">Price Trend</a>
         <a {{action 'gotopage' 'map'}} class="list-group-item" id="map">Map</a>
         <a {{action 'gotopage' 'inventory'}} class="list-group-item" id="inventory">Inventory</a>
+        <a {{action 'gotopage' 'alerts'}} class="list-group-item" id="alerts">Get Alerts</a>
       </div>
     </div>
 		<div class="col-xs-12 col-sm-9">
   		<p class="sidenav-toggle-button visible-xs">
-  	        <button {{action 'toggle_side_nav'}} class="btn btn-primary btn-xs">>></button>
-  	      </p>
+        <button {{action 'toggle_side_nav'}} class="btn btn-primary btn-xs">>></button>
+      </p>
   		{{outlet}}
   	</div>
 	</div>

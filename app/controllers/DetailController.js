@@ -18,6 +18,7 @@ module.exports = App.DetailController = Ember.ObjectController.extend({
       $('#price').removeClass('active');
       $('#inventory').removeClass('active');
       $('#map').removeClass('active');
+      $('#alerts').removeClass('active');
       switch (pageId) {
       case "details":
         url = "/detail/"+this.get("content.id");
@@ -30,6 +31,9 @@ module.exports = App.DetailController = Ember.ObjectController.extend({
         break;
       case "map":
         url = "/detail/"+this.get("content.id")+"/map";
+        break;
+      case "alerts":
+        url = "/detail/"+this.get("content.id")+"/alerts";
         break;
       }
       $('#'+pageId).addClass('active');

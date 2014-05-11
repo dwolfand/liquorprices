@@ -24,5 +24,9 @@ module.exports = (function() {
     templateName: 'detail-price'
   });
 
+  App.DetailAlertsRoute = Ember.Route.extend({
+    templateName: 'detail-alerts'
+  });
+
 }());
 

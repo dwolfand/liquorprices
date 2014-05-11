@@ -51,9 +51,9 @@ app.get('/liquors', function(req, res) {
 	}
 });
 
-app.get('/addEmail/:_id/:email/:alerts', function(req, res) {
+app.get('/addEmail/:_id/:email', function(req, res) {
 	var collectionTarget = req.query.db || liquorPricesCollection;
-	datastore.addEmailAlert(collectionTarget, req.param("_id"), req.param("email"), req.param("alerts"));
+	datastore.addEmailAlert(collectionTarget, req.param("_id"), req.param("email"), req.query.price, req.query.stock);
 	res.send("adding email...");
 });
 

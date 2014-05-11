@@ -44,7 +44,7 @@ module.exports = App.InventoryMapView = Ember.View.extend({
     console.log("rendering map");
     var locations = this.get('content').get('inventory');
 
-    $("#map-canvas").css({ height: $("#map-canvas").width()});
+    $("#map-canvas").css({ height: $( window ).height()-100});
     var mapOptions = {
       center: new google.maps.LatLng(39.136600,-77.204514),//moco center
       zoom: 10

@@ -4,6 +4,7 @@ module.exports = App.ApplicationController = Ember.Controller.extend({
   searchstring:'',
   actions: {
     search: function() {
+      this.send('closemenu');
       if (this.searchstring.length < 3){
       	alert("Please make your search at least 3 letters");
       }else{

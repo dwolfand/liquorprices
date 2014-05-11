@@ -1,0 +1,27 @@
+<div class="row aler">
+  <div class="col-xs-12 col-centered">
+  	<div id="success-message" class="alert alert-success" style="display:none" >
+  		<strong>Thanks!</strong> You are set to receive alerts for this item!
+	</div>
+	<div id="error-message" class="alert alert-danger" style="display:none" >
+  		<strong>Oops!</strong> There was an error trying to save your alert settings!
+	</div>
+	<div id="bad-email-message" class="alert alert-danger" style="display:none" >
+  		<strong>Oops!</strong> Please make sure your email is correct!
+	</div>
+  </div>
+  <div class="col-xs-12 col-centered">
+  	{{input type="text" action="alertSignUp" placeholder="Email" class="form-control" value=emailAddress}}
+  </div>
+  <div class="col-xs-12 col-centered">
+  	{{input type="checkbox" name="price" checked=price}} Notify me of price drops
+  </div>
+  {{#if isNotInStock}}
+	<div class="col-xs-12 col-centered">
+	  {{input type="checkbox" name="stock" checked=stock}} Notify me when this item is back in stock
+	</div>
+  {{/if}}
+  <div class="col-xs-12 col-centered">
+  	<button {{action 'alertSignUp'}} class="btn btn-default">Submit</button>
+  </div>
+</div>

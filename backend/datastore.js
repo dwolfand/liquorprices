@@ -99,25 +99,23 @@ module.exports = {
         });
     },
 
-    addEmailAlert: function(collectionTarget, itemId, email, alerts){
+    addEmailAlert: function(collectionTarget, itemId, email, isPrice, isStock){
 		getCollection(collectionTarget, function(collection) {
-			var alertList = alerts.split(",");
-			for (key in alertList){
-				if (alertList[key]==='price'){
-					collection.update({_id:itemId}, {'$addToSet': {priceEmails:email}}, {w: 1}, function(err, result) {
-						if (err){
-							console.log("error adding email to item: "+itemId);
-							console.log(err);
-						}
-					});
-				}else if (alertList[key]==='stock'){
-					collection.update({_id:itemId}, {'$addToSet': {stockEmails:email}}, {w: 1}, function(err, result) {
-						if (err){
-							console.log("error adding email to item: "+itemId);
-							console.log(err);
-						}
-					});
-				}
+			if (isPrice==='true'){
+				collection.update({_id:itemId}, {'$addToSet': {priceEmails:email}}, {w: 1}, function(err, result) {
+					if (err){
+						console.log("error adding email to item: "+itemId);
+						console.log(err);
+					}
+				});
+			}
+			if (isStock==='true'){
+				collection.update({_id:itemId}, {'$addToSet': {stockEmails:email}}, {w: 1}, function(err, result) {
+					if (err){
+						console.log("error adding email to item: "+itemId);
+						console.log(err);
+					}
+				});
 			}
 		});
 	},

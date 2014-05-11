@@ -7,6 +7,7 @@ module.exports = App.Router.map(function() {
     	this.route('inventory');
     	this.route('map');
     	this.route('price');
+    	this.route('alerts');
     });
     this.resource('search', { path: '/search/:searchstring' });
 });
