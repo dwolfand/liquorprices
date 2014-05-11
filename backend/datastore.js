@@ -90,11 +90,7 @@ module.exports = {
 							query.parentcategory = {"$in":"WHISKEY".split(",")};
 							collection.find(query,fields,options).toArray(function(err, whiskeyResults){
 								returnResults = returnResults.concat(whiskeyResults);
-								query.parentcategory = {"$in":"OTHER".split(",")};
-								collection.find(query,fields,options).toArray(function(err, otherResults){
-									returnResults = returnResults.concat(otherResults);
-									callback({"liquors":returnResults});
-								});
+								callback({"liquors":returnResults});
 							});
 						});
 					});
@@ -103,55 +99,26 @@ module.exports = {
         });
     },
 
-    maxPercent: function(percent, collectionTarget, callback){
-        getCollection(collectionTarget, function(collection) {
-			collection.find().toArray(function(err, results){
-				var liquors = mapDBResults(results);
-				var returnResult = [];
-				var lowestSale;
-				var liquor;
-				for (var key in liquors){
-                    liquor = liquors[key];
-                    for (var saleKey in liquor.sale){
-                        if (lowestSale && liquor.sale[saleKey].saleprice < lowestSale.saleprice){
-                            lowestSale = liquor.sale[saleKey];
-                        }else{
-                            lowestSale = liquor.sale[saleKey];
-                        }
-                    }
-                    if (lowestSale && (lowestSale.saleprice/liquor.price)*100 <= percent){
-                        liquor.percent = (lowestSale.saleprice/liquor.price)*100;
-                        returnResult.push(liquor);
-                    }
-                    lowestSale = undefined;
-				}
-				callback(returnResult);
-			});
-        });
-    },
-    
-	findDiff: function(callback){
-		var diffs = [];
-		getCollection('originalliquorprices', function(origcollection) {
-			origcollection.find().toArray(function(err, results){
-				var orig = mapDBResults1(results);
-				getCollection('liquorprices', function(newcollection) {
-					newcollection.find().toArray(function(err, newresults){
-						var newstuff = mapDBResults(newresults);
-						var count = 0;
-						for (var key in orig){
-							count++;
-							if (!newstuff[orig[key].itemcode]){
-								console.log(orig[key]);
-								diffs.push(orig[key].itemcode);
-							}
-							//if (count>10) break;
+    addEmailAlert: function(collectionTarget, itemId, email, alerts){
+		getCollection(collectionTarget, function(collection) {
+			var alertList = alerts.split(",");
+			for (key in alertList){
+				if (alertList[key]==='price'){
+					collection.update({_id:itemId}, {'$addToSet': {priceEmails:email}}, {w: 1}, function(err, result) {
+						if (err){
+							console.log("error adding email to item: "+itemId);
+							console.log(err);
 						}
-						console.log(diffs);
-						callback(diffs);
 					});
-				});
-			});
+				}else if (alertList[key]==='stock'){
+					collection.update({_id:itemId}, {'$addToSet': {stockEmails:email}}, {w: 1}, function(err, result) {
+						if (err){
+							console.log("error adding email to item: "+itemId);
+							console.log(err);
+						}
+					});
+				}
+			}
 		});
 	},
 
@@ -243,10 +210,13 @@ module.exports = {
 										}
 								});
 							} else {
+								//console.log(sourceLiquor._id);
 								var dbUpdates = {
 									$set: {cursaleprice: sourceLiquor.cursaleprice,
 										cursaleenddate: sourceLiquor.cursaleenddate,
 										discount: sourceLiquor.discount,
+										imgsrc: sourceLiquor.imgsrc,
+										status: sourceLiquor.status,
 										parentcategory: sourceLiquor.parentcategory,
 										lastUpdated: curDate}};
 								collection.update({_id:sourceLiquor._id}, dbUpdates,function(err,rs) {
@@ -350,8 +320,35 @@ var getUpdatesOnLiquorObjects = function(oldObj, newObj, curDate){
 	if (errors.length > 0){
 		updates.errors = {$each: errors};
 	}
+
+	//check if emails should be sent
+	if (oldObj.stockEmails && oldObj.stockEmails.length>0 && oldObj.status !== newObj.status && newObj.status === "IN STOCK"){
+		console.log("heree");
+		scheduleEmails('stockChange', oldObj.stockEmails, oldObj, null);
+	}
+	if (oldObj.priceEmails && oldObj.priceEmails.length>0){
+		var oldPrice = oldObj.cursaleenddate ? oldObj.cursaleprice : oldObj.price;
+		var newPrice = newObj.cursaleenddate ? newObj.cursaleprice : newObj.price;
+		if(newPrice < oldPrice){
+			scheduleEmails('priceDrop', oldObj.priceEmails, oldObj, newPrice);
+		}
+	}
 	
 	return updates;
+};
+
+var scheduleEmails = function(emailType, emails, oldItem, newValue){
+	getCollection('liquorpricesdev-email', function(collection) {
+		var message = emailType+' - '+oldItem.description;
+		for (key in emails){
+			collection.update({_id:emails[key]}, {'$push': {'queue':{dateSent:null,message:message}}}, {upsert:true, w: 1}, function(err, result) {
+				if (err){
+					console.log("error adding email queue");
+					console.log(err);
+				}
+			});
+		}
+	});
 };
 
 var mapDBResults = function(results){
@@ -359,15 +356,6 @@ var mapDBResults = function(results){
 	var resultsList = [];
 	for (key in results) {
 		resultsList[results[key]._id] = results[key];
-	}
-	return resultsList;
-};
-
-var mapDBResults1 = function(results){
-	console.log('parsing db items into list');
-	var resultsList = [];
-	for (key in results) {
-		resultsList[results[key].itemcode] = results[key];
 	}
 	return resultsList;
 };

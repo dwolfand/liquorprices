@@ -18,7 +18,7 @@ module.exports = App.DataTableView = Ember.View.extend({
         saledaysleft: enddate ? (new moment(enddate).diff(new moment(), 'days'))+" Days Left" : null,
         savings: enddate ? "$"+(liquor.get('price') - liquor.get('cursaleprice')).toFixed(2) : null,
         category: liquor.get('category'),
-        discount: discount ? discount.toFixed(2)+"%" : null
+        discount: enddate ? discount.toFixed(2)+"%" : null
       });
     });
     return liquors;

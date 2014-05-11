@@ -38,35 +38,28 @@ app.get('/inventory/:_id', function(req, res) {
 	});
 });
 
-app.get('/finddiff', function(req, res) {
-	datastore.findDiff(function(diff){
-		res.send(diff.toString());
-	});
-});
-
-app.get('/maxpercent', function(req, res) {
-	var collectionTarget = req.query.db || liquorPricesCollection;
-	datastore.maxPercent(req.query.percent, collectionTarget, function(result){
-		res.json(result);
-	});
-});
-
 app.get('/liquors', function(req, res) {
 	var collectionTarget = req.query.db || liquorPricesCollection;
 	if (req.query.topsales){
-		datastore.getTopSales(liquorPricesCollection, req.query.limit, function(result){
+		datastore.getTopSales(collectionTarget, req.query.limit, function(result){
 			res.json(result);
 		});
 	}else{
-		datastore.getAllLiquors(liquorPricesCollection, req.query.limit, req.query.category, req.query.parentcategory, req.query.searchString, req.query.mindiscount, function(result){
+		datastore.getAllLiquors(collectionTarget, req.query.limit, req.query.category, req.query.parentcategory, req.query.searchString, req.query.mindiscount, function(result){
 			res.json(result);
 		});
 	}
 });
 
+app.get('/addEmail/:_id/:email/:alerts', function(req, res) {
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	datastore.addEmailAlert(collectionTarget, req.param("_id"), req.param("email"), req.param("alerts"));
+	res.send("adding email...");
+});
+
 app.get('/liquorDetails/:_id', function(req, res) {
 	var collectionTarget = req.query.db || liquorPricesCollection;
-	datastore.getLiquorById(liquorPricesCollection, req.param("_id"), mocoapi.getInventoryForItem, function(result){
+	datastore.getLiquorById(collectionTarget, req.param("_id"), mocoapi.getInventoryForItem, function(result){
 		res.json(result);
 	});
 });
