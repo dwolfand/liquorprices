@@ -160,6 +160,29 @@ module.exports = {
 		});
 	},
 
+	sendEmailsFromQueue: function(targetCollection){
+		var curDate = new Date();
+		getCollection(targetCollection+"-email", function(collection) {
+			collection.find({dateSent:null},{},{}).toArray(function(err, results){
+				if (err){
+					console.log("error getting emails from queue");
+					console.log(err);
+				}else{
+					for (key in results){
+						//console.log(results[key]);
+						tools.sendEmail(results[key].email,"Liquor Updates",results[key].message);
+						collection.update({_id:results[key]._id}, {$set:{dateSent:curDate}}, {w: 1}, function(err, result) {
+							if (err){
+								console.log("error adding email queue");
+								console.log(err);
+							}
+						});
+					}
+				}
+			});
+		});
+	},
+
 	loadLiquorsIntoDB: function(sourceLiquors, curDate, collectionTarget){
 		getCollection(collectionTarget, function(collection) {
 			//collection.remove({},function(err, removed){
@@ -321,25 +344,24 @@ var getUpdatesOnLiquorObjects = function(oldObj, newObj, curDate){
 
 	//check if emails should be sent
 	if (oldObj.stockEmails && oldObj.stockEmails.length>0 && oldObj.status !== newObj.status && newObj.status === "IN STOCK"){
-		console.log("heree");
-		scheduleEmails('stockChange', oldObj.stockEmails, oldObj, null);
+		scheduleEmails('stockChange', oldObj.stockEmails, oldObj, null, curDate);
 	}
 	if (oldObj.priceEmails && oldObj.priceEmails.length>0){
 		var oldPrice = oldObj.cursaleenddate ? oldObj.cursaleprice : oldObj.price;
 		var newPrice = newObj.cursaleenddate ? newObj.cursaleprice : newObj.price;
 		if(newPrice < oldPrice){
-			scheduleEmails('priceDrop', oldObj.priceEmails, oldObj, newPrice);
+			scheduleEmails('priceDrop', oldObj.priceEmails, oldObj, newPrice, curDate);
 		}
 	}
 	
 	return updates;
 };
 
-var scheduleEmails = function(emailType, emails, oldItem, newValue){
+var scheduleEmails = function(emailType, emails, oldItem, newValue, curDate){
 	getCollection('liquorpricesdev-email', function(collection) {
 		var message = emailType+' - '+oldItem.description;
 		for (key in emails){
-			collection.update({_id:emails[key]}, {'$push': {'queue':{dateSent:null,message:message}}}, {upsert:true, w: 1}, function(err, result) {
+			collection.insert({'email':emails[key],'dateSent':null,'dateQueued':curDate,'message':message}, {w:1}, function(err,rs) {
 				if (err){
 					console.log("error adding email queue");
 					console.log(err);

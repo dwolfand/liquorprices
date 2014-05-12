@@ -30,6 +30,9 @@ app.get('/loaddb', function(req, res) {
 	datastore.logRunEvent(collectionTarget, curDate);
 	mocoapi.getAllLiquors(curDate, recordsToImport, collectionTarget, datastore.loadLiquorsIntoDB);
 	res.send('importing underwayyyyy');
+	
+	//wait 2 min before sending emails
+	setTimeout(function(){datastore.sendEmailsFromQueue(collectionTarget);}, 120000);
 });
 
 app.get('/inventory/:_id', function(req, res) {
@@ -79,6 +82,12 @@ app.get('/updatesalefields', function(req, res) {
 app.get('/updatediscountfields', function(req, res) {
 	var collectionTarget = req.query.db || 'temp';
 	datastore.updateDiscountFields(collectionTarget);
+	res.send("running...");
+});
+
+app.get('/sendemailqueue', function(req, res) {
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	datastore.sendEmailsFromQueue(collectionTarget);
 	res.send("running...");
 });
 
