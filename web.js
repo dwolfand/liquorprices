@@ -12,6 +12,7 @@ var moment = require('moment');
 var tools = require('./backend/tools');
 var datastore = require('./backend/datastore');
 var mocoapi = require('./backend/mocoapi');
+var jobs = require('./backend/jobs');
 
 var liquorPricesCollection = process.env.LIQUOR_PRICES_COLLECTION_NAME || 'liquorpricesdev';
 		
@@ -27,13 +28,20 @@ app.get('/loaddb', function(req, res) {
 	var recordsToImport = req.query.num || 20;
 	var collectionTarget = req.query.db || liquorPricesCollection;
 	var curDate = new Date();
-	datastore.logRunEvent(collectionTarget, curDate);
-	mocoapi.getAllLiquors(curDate, recordsToImport, collectionTarget, datastore.loadLiquorsIntoDB);
+	jobs.logRunEvent(collectionTarget, curDate);
+	mocoapi.getAllLiquors(curDate, recordsToImport, collectionTarget, jobs.loadLiquorsIntoDB);
 	res.send('importing underwayyyyy');
-	
+
 	//wait 2 min before sending emails
-	setTimeout(function(){datastore.sendEmailsFromQueue(collectionTarget);}, 120000);
+	setTimeout(function(){jobs.sendEmailsFromQueue(collectionTarget);}, 120000);
 });
+
+app.get('/sendemailqueue', function(req, res) {
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	jobs.sendEmailsFromQueue(collectionTarget);
+	res.send("running...");
+});
+
 
 app.get('/inventory/:_id', function(req, res) {
 	mocoapi.getInventoryForItem(req.param("_id"), function(result){
@@ -82,12 +90,6 @@ app.get('/updatesalefields', function(req, res) {
 app.get('/updatediscountfields', function(req, res) {
 	var collectionTarget = req.query.db || 'temp';
 	datastore.updateDiscountFields(collectionTarget);
-	res.send("running...");
-});
-
-app.get('/sendemailqueue', function(req, res) {
-	var collectionTarget = req.query.db || liquorPricesCollection;
-	datastore.sendEmailsFromQueue(collectionTarget);
 	res.send("running...");
 });
 

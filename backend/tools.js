@@ -11,6 +11,9 @@ module.exports = {
 		return new Date(moment.utc([parts[2], parts[0]-1, parts[1]]).format()); // Note: months are 0-based
 	},
 	sendEmail: function(toEmail,subject,htmlBody){
+		if (!htmlBody){
+			return;
+		}
 		var payload = {
 			"From" : "liquorprices@mailtothis.com",
 			"To" : toEmail,
