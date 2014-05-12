@@ -8,7 +8,7 @@ var collections = {};
 
 module.exports = {
     getAllLiquors: function(collectionTarget, limit, category, parentcategory, searchString, mindiscount, callback){
-        getCollection(collectionTarget, function(collection) {
+        this.getCollection(collectionTarget, function(collection) {
         	query = {};
         	if (category){
         		query.category = {"$in":category.split(",")};
@@ -46,7 +46,7 @@ module.exports = {
     },
 
     getLiquorById: function(collectionTarget, _id, inventoryFunction, callback){
-        getCollection(collectionTarget, function(collection) {
+        this.getCollection(collectionTarget, function(collection) {
 			collection.find({"_id":_id},{},{}).toArray(function(err, results){
 				inventoryFunction(_id, function(inventoryResult){
 					var result = results[0];
@@ -74,7 +74,7 @@ module.exports = {
 		  parentcategory: 1,
 		  discount: 1};
     	options = {sort:[["discount","desc"]],limit:limit};
-        getCollection(collectionTarget, function(collection) {
+        this.getCollection(collectionTarget, function(collection) {
         	query.parentcategory = {"$in":"VODKA".split(",")};
 			collection.find(query,fields,options).toArray(function(err, vodkaResults){
 				returnResults = returnResults.concat(vodkaResults);
@@ -100,7 +100,7 @@ module.exports = {
     },
 
     addEmailAlert: function(collectionTarget, itemId, email, isPrice, isStock){
-		getCollection(collectionTarget, function(collection) {
+		this.getCollection(collectionTarget, function(collection) {
 			if (isPrice==='true'){
 				collection.update({_id:itemId}, {'$addToSet': {priceEmails:email}}, {w: 1}, function(err, result) {
 					if (err){
@@ -121,9 +121,9 @@ module.exports = {
 	},
 
 	copyCollection: function(fromCollection, toCollection){
-		getCollection(fromCollection, function(origcollection) {
+		this.getCollection(fromCollection, function(origcollection) {
 			origcollection.find().toArray(function(err, results){
-				getCollection(toCollection, function(newcollection) {
+				this.getCollection(toCollection, function(newcollection) {
 					for (var key in results){
 						newcollection.insert(results[key], {w:1}, function(err,rs) {
 							if (err){
@@ -138,13 +138,13 @@ module.exports = {
 	},
 
 	updateSaleFields: function(collectionTarget){
-		getCollection(collectionTarget, function(collection) {
+		this.getCollection(collectionTarget, function(collection) {
 			updateSaleField(collection.find(), collection, 1);
 		});
 	},
 
 	updateDiscountFields: function(collectionTarget){
-		getCollection(collectionTarget, function(collection) {
+		this.getCollection(collectionTarget, function(collection) {
 			updateDiscountField(collection.find(), collection, 1);
 		});
 	},
