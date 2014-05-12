@@ -1,6 +1,10 @@
 var mongo = require('mongodb');
+var handlebars = require('handlebars');
+var fs = require('fs');
 var tools = require('./tools');
 var datastore = require('./datastore');
+
+var emailTemplate = '';
 
 module.exports = {
 
@@ -29,12 +33,14 @@ module.exports = {
 						emails[results[key]._id] = results[key];
 					}
 					for (item in emails){
-						tools.sendEmail(emails[item]._id,"Liquor Updates",getEmailMessage(emails[item].queue));
-						collection.update({_id:emails[item]._id}, {'$unset':{queue:""},'$push': {'sent':{dateSent:curDate,message:emails[item].queue}}}, {w: 1}, function(err, result) {
-							if (err){
-								console.log("error processing email queue");
-								console.log(err);
-							}
+						getEmailMessage(emails[item].queue, emails[item]._id, function(emailBody){
+							tools.sendEmail(emails[item]._id,"Liquor Updates", emailBody);
+							collection.update({_id:emails[item]._id}, {'$unset':{queue:""},'$push': {'sent':{dateSent:curDate,message:emails[item].queue}}}, {w: 1}, function(err, result) {
+								if (err){
+									console.log("error processing email queue");
+									console.log(err);
+								}
+							});
 						});
 					}
 				}
@@ -175,9 +181,18 @@ var getUpdatesOnLiquorObjects = function(oldObj, newObj, curDate, collectionTarg
 
 var scheduleEmails = function(emailType, emails, oldItem, newValue, curDate, collectionTarget){
 	datastore.getCollection(collectionTarget+'-email_log', function(collection) {
-		var message = emailType+' - '+oldItem.description;
+		var message = '';
+		if (emailType === 'priceDrop'){
+			message = "This item's price has dropped to $"+parseFloat(newValue).toFixed(2);
+		}else if (emailType === 'stockChange'){
+			message = 'This item is back in stock!';
+		}
 		for (key in emails){
-			collection.update({_id:emails[key]}, {'$push': {'queue':{'dateQueued':curDate,message:message}}}, {upsert:true, w: 1}, function(err, result) {
+			collection.update({_id:emails[key]}, {'$push': {'queue':{'dateQueued':curDate,
+				message:message,
+				itemId:oldItem._id,
+				name:(oldItem.longdescription+' - '+oldItem.size)}}}, 
+			{upsert:true, w: 1}, function(err, result) {
 			//collection.insert({'email':emails[key],'dateSent':null,'dateQueued':curDate,'message':message}, {w:1}, function(err,rs) {
 				if (err){
 					console.log("error adding email queue");
@@ -197,10 +212,27 @@ var mapDBResults = function(results){
 	return resultsList;
 };
 
-var getEmailMessage = function(queue){
-	var finalMessage = '';
-	for (key in queue) {
-		finalMessage = finalMessage+queue[key].message+'<br/>';
+var getEmailTemplate = function(callback){
+	if (emailTemplate === ''){
+		fs.readFile('./backend/emailTemplate.html', 'utf8', function (err,source) {
+		  if (err) {
+		    console.log(err);
+		  }else {
+		  	emailTemplate = source;
+			callback(emailTemplate);
+		  }
+		});
+	}else {
+		callback(emailTemplate);
 	}
-	return finalMessage;
+}
+
+var getEmailMessage = function(queue, email, callback){
+	getEmailTemplate(function(source){
+		var template = handlebars.compile(source);
+		var data = { "messages": queue, "email": email};
+		var result = template(data);
+		callback(result);
+	});
+	
 };

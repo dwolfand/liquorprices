@@ -42,7 +42,6 @@ app.get('/sendemailqueue', function(req, res) {
 	res.send("running...");
 });
 
-
 app.get('/inventory/:_id', function(req, res) {
 	mocoapi.getInventoryForItem(req.param("_id"), function(result){
 		res.json(result);

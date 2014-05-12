@@ -10,7 +10,7 @@
     "build:production": "brunch build --production",
     "update:ember": "node setup.js update:ember",
     "update:skeleton": "node setup.js update:skeleton",
-	"postinstall": "brunch build -P"
+    "postinstall": "brunch build -P"
   },
   "repository": {
     "type": "git",
@@ -40,7 +40,8 @@
     "auto-reload-brunch": "~1.7.0",
     "ember-handlebars-brunch": "git://github.com/gcollazo/ember-handlebars-brunch.git#master",
     "brunch": "~1.7.13",
-	"bower":"~1.3.3"
+    "bower": "~1.3.3",
+    "handlebars": "~2.0.0-alpha.2"
   },
   "devDependencies": {
     "karma": "*",
