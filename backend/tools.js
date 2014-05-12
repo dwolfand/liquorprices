@@ -15,12 +15,12 @@ module.exports = {
 			return;
 		}
 		var payload = {
-			"From" : "liquorprices@mailtothis.com",
+			"From" : "liquorprices@mailismagic.com",
 			"To" : toEmail,
 			"Subject" : subject,
 			"Tag" : "Invitation",
 			"HtmlBody" : htmlBody,
-			"ReplyTo" : "liquorprices@mailtothis.com"
+			"ReplyTo" : "liquorprices@mailismagic.com"
 		};
 		var options = {
 			url: 'http://api.postmarkapp.com/email',
