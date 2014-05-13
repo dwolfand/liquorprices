@@ -57,6 +57,20 @@ module.exports = {
         });
     },
 
+    getSubscriptions: function(collectionTarget, email, callback){
+    	emailSubscription = {};
+    	fields = {size: 1, imgsrc: 1, longdescription: 1, parentcategory: 1};
+        this.getCollection(collectionTarget, function(collection) {
+			collection.find({"priceEmails":email},fields,{}).toArray(function(err, priceResults){
+				emailSubscription.priceSubscriptions = priceResults;
+				collection.find({"stockEmails":email},fields,{}).toArray(function(err, stockResults){
+					emailSubscription.stockSubscriptions = stockResults;
+					callback({"emailSubscription":emailSubscription});
+				});
+			});
+        });
+    },
+
     getTopSales: function(collectionTarget, limit, callback){
     	var returnResults = [];
     	query = {discount: {"$gt":0}};

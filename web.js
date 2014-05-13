@@ -42,6 +42,13 @@ app.get('/sendemailqueue', function(req, res) {
 	res.send("running...");
 });
 
+app.get('/getsubscriptions/:email', function(req, res) {
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	datastore.getSubscriptions(collectionTarget,req.param("email"), function(result){
+		res.json(result);
+	});
+});
+
 app.get('/inventory/:_id', function(req, res) {
 	mocoapi.getInventoryForItem(req.param("_id"), function(result){
 		res.json(result);
