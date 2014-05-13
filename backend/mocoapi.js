@@ -25,8 +25,8 @@ var LOCATIONS = [];
 	LOCATIONS['kingsview'] = {displayName: 'Kingsview', lat:'39.1585545', lon:'-77.2792207', addr1:'18323 Leaman Farm Road F-1', addr2:'Germantown, MD 20874'};
 	LOCATIONS['walnut_hill'] = {displayName: 'Walnut Hill', lat:'39.126327', lon:'-77.183149', addr1:'16535 S. Frederick Road', addr2:'Gaithersburg, MD 20855'};
 	LOCATIONS['goshen_crossing'] = {displayName: 'Goshen Crossing', lat:'39.1853596', lon:'-77.1874469', addr1:'20004-20008 Goshen Road', addr2:'Gaithersburg, MD 20879'};
-	LOCATIONS['milestone'] = {displayName: 'Milestone', lat:'39.2019721', lon:'-77.2456464', addr1:'20946 Frederick Road Unit D1', addr2:'Germantown, MD 20876'};
-	LOCATIONS['seneca_meadows'] = {displayName: 'Seneca Meadows', lat:'39.203053', lon:'-77.246989', addr1:'20680 Seneca Meadows Parkway, Suite A-2', addr2:'Germantown, MD 20876'};
+	LOCATIONS['milestone'] = {displayName: 'Milestone', lat:'39.202887', lon:'-77.246714', addr1:'20946 Frederick Road Unit D1', addr2:'Germantown, MD 20876'};
+	LOCATIONS['seneca_meadows'] = {displayName: 'Seneca Meadows', lat:'39.200322', lon:'-77.255175', addr1:'20680 Seneca Meadows Parkway, Suite A-2', addr2:'Germantown, MD 20876'};
 	LOCATIONS['olney'] = {displayName: 'Olney', lat:'39.149837', lon:'-77.06628', addr1:'17825 Georgia Avenue', addr2:'Olney, MD 20832'};
 
 module.exports = {
