@@ -20,7 +20,7 @@ exports.config = {
     },
     stylesheets: {
       joinTo: {
-        'stylesheets/app.css': /^(app|vendor(\/||\\)styles)/
+        'stylesheets/app.css': /^(app|vendor)/
       },
       order: {
         before: ['vendor/styles/normalize.css']
