@@ -49,16 +49,21 @@ module.exports = {
         this.getCollection(collectionTarget, function(collection) {
 			collection.find({"_id":_id},{},{}).toArray(function(err, results){
 				inventoryFunction(_id, function(inventoryResult){
-					var result = results[0];
-					result.inventory = inventoryResult;
-					callback({"liquorDetail":result});
+					if (results[0]){
+						var result = results[0];
+						result.inventory = inventoryResult;
+						callback({"liquorDetail":result});
+					}else{
+						console.log("Item does not exist: "+_id);
+						callback({});
+					}
 				});
 			});
         });
     },
 
     getSubscriptions: function(collectionTarget, email, callback){
-    	emailSubscription = {};
+    	emailSubscription = {_id:email};
     	fields = {size: 1, imgsrc: 1, longdescription: 1, parentcategory: 1};
         this.getCollection(collectionTarget, function(collection) {
 			collection.find({"priceEmails":email},fields,{}).toArray(function(err, priceResults){
@@ -69,6 +74,35 @@ module.exports = {
 				});
 			});
         });
+    },
+
+    removeSubscription: function(collectionTarget, identifier, callback){
+    	var itemId = identifier.slice(identifier.indexOf("---")+9,identifier.length), 
+    		subType = identifier.slice(identifier.indexOf("---")+3,identifier.indexOf("---")+6), 
+    		email = identifier.slice(0,identifier.indexOf("---"));
+
+		this.getCollection(collectionTarget, function(collection) {
+			if (subType === 'stk'){
+				collection.update({_id:itemId}, {'$pull': {'stockEmails':email}}, {w: 1}, function(err, result) {					
+					if (err){
+						console.log("error removing subscription: "+identifier);
+						console.log(err);
+					}else{
+						callback();
+					}
+				});
+			}else if (subType === 'prc'){
+				collection.update({_id:itemId}, {'$pull': {'priceEmails':email}}, {w: 1}, function(err, result) {
+					if (err){
+						console.log("error removing subscription: "+identifier);
+						console.log(err);
+					}else{
+						callback();
+					}
+				});
+			}
+		});
+    	
     },
 
     getTopSales: function(collectionTarget, limit, callback){

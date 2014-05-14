@@ -10,4 +10,5 @@ module.exports = App.Router.map(function() {
     	this.route('alerts');
     });
     this.resource('search', { path: '/search/:searchstring' });
+    this.resource('subscriptions', { path: '/subscriptions/:account' });
 });

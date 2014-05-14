@@ -10,6 +10,9 @@ module.exports = App.LiquorDetail = DS.Model.extend({
   price: attr(),
   category: attr(),
   imgsrc: attr(),
+  imageUrl: function() {
+    return "http://www2.montgomerycountymd.gov/dlcsearch/"+this.get("imgsrc");
+  }.property('imgsrc'),
   longdescription: attr(),
   status: attr(),
   cursaleprice: attr(),

@@ -5,8 +5,19 @@ var attr = DS.attr,
     belongsTo = DS.belongsTo;
 
 module.exports = App.Subscription = DS.Model.extend({
+  itemId: attr(),
   size: attr(),
   imgsrc: attr(),
+  imageUrl: function() {
+    return "http://www2.montgomerycountymd.gov/dlcsearch/"+this.get("imgsrc");
+  }.property('imgsrc'),
+  bgImageStyle: function() {
+    return "background-image:url('http://www2.montgomerycountymd.gov/dlcsearch/"+this.get("imgsrc")+"');";
+  }.property('imgsrc'),
+  detailUrl: function() {
+    return "#/detail/"+this.get("itemId");
+  }.property('itemId'),
   longdescription: attr(),
-  parentcategory: attr()
+  parentcategory: attr(),
+  subscriptionType: attr()
 });

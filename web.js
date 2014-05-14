@@ -42,7 +42,7 @@ app.get('/sendemailqueue', function(req, res) {
 	res.send("running...");
 });
 
-app.get('/getsubscriptions/:email', function(req, res) {
+app.get('/emailSubscriptions/:email', function(req, res) {
 	var collectionTarget = req.query.db || liquorPricesCollection;
 	datastore.getSubscriptions(collectionTarget,req.param("email"), function(result){
 		res.json(result);
@@ -66,6 +66,12 @@ app.get('/liquors', function(req, res) {
 			res.json(result);
 		});
 	}
+});
+
+app.del('/subscriptions/:identifier', function(req, res) {
+	datastore.removeSubscription(liquorPricesCollection, req.param("identifier"), function(){
+		res.send(200);
+	});
 });
 
 app.get('/addEmail/:_id/:email', function(req, res) {

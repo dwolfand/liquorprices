@@ -6,18 +6,6 @@ module.exports = (function() {
 	});
 
 	App.LiquorDetailSerializer = DS.RESTSerializer.extend({
-	  // extractSingle: function(store, type, oldPayload) {
-	  // 	console.log("extractSingle");
-	  // 	console.log(oldPayload);
-
-	  // 	this._super(store, type, oldPayload);
-	  // },
-	  // extractArray: function(store, type, payload, id, requestType) {
-	  // 	 console.log("extractArray");
-	  // 	// console.log(id);
-	  // 	// console.log(payload);
-	  // 	this._super(store, type, payload, id, requestType);
-	  // },
 	  normalizePayload: function(type, payload) {
 	  	console.log("normalizing liquor Payload");
 	  	//console.log(payload);
@@ -68,5 +56,47 @@ module.exports = (function() {
 	    payload.inventory = allInventory;
 	    return this._super(type, payload);
 	  }
-	})
+	});
+
+	App.EmailSubscriptionSerializer = DS.RESTSerializer.extend({
+	  normalizePayload: function(type, payload) {
+	  	console.log("normalizing subscription Payload");
+	  	//console.log(payload);
+	    var allSubs = [];
+
+	    var emailSub = payload.emailSubscription;
+
+    	var tempPriceSubs = emailSub.priceSubscriptions;
+    	var tempStockSubs = emailSub.stockSubscriptions;
+    	emailSub.id = emailSub._id;
+    	emailSub.priceSubscriptions = [];
+    	emailSub.stockSubscriptions = [];
+    	var count = 1;
+    	
+    	if(tempPriceSubs){
+	    	tempPriceSubs.forEach(function(sub) {
+	    		sub.itemId = sub._id;
+	    		sub.subscriptionType = 'price';
+	    		sub._id = emailSub._id+"---prc---"+sub.itemId;
+	    		count++;
+	    		emailSub.priceSubscriptions.push(sub._id);
+	    		allSubs.push(sub);
+	    	});
+	    }
+
+    	if(tempStockSubs){
+    		tempStockSubs.forEach(function(sub) {
+    			sub.itemId = sub._id;
+    			sub.subscriptionType = 'stock';
+	    		sub._id = emailSub._id+"---stk---"+sub.itemId;
+	    		count++;
+	    		emailSub.stockSubscriptions.push(sub._id);
+	    		allSubs.push(sub);
+	    	});
+    	}
+    	
+	    payload.subscriptions = allSubs;
+	    return this._super(type, payload);
+	  }
+	});
 }());
