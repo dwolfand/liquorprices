@@ -1,219 +1,401 @@
-﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head><title></title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=320, target-densitydpi=device-dpi">
-<style type="text/css">
-/* Mobile-specific Styles */
-@media only screen and (max-width: 660px) { 
-table[class=w0], td[class=w0] { width: 0 !important; }
-table[class=w10], td[class=w10], img[class=w10] { width:10px !important; }
-table[class=w15], td[class=w15], img[class=w15] { width:5px !important; }
-table[class=w30], td[class=w30], img[class=w30] { width:10px !important; }
-table[class=w60], td[class=w60], img[class=w60] { width:10px !important; }
-table[class=w125], td[class=w125], img[class=w125] { width:80px !important; }
-table[class=w130], td[class=w130], img[class=w130] { width:55px !important; }
-table[class=w140], td[class=w140], img[class=w140] { width:90px !important; }
-table[class=w160], td[class=w160], img[class=w160] { width:180px !important; }
-table[class=w170], td[class=w170], img[class=w170] { width:100px !important; }
-table[class=w180], td[class=w180], img[class=w180] { width:80px !important; }
-table[class=w195], td[class=w195], img[class=w195] { width:80px !important; }
-table[class=w220], td[class=w220], img[class=w220] { width:80px !important; }
-table[class=w240], td[class=w240], img[class=w240] { width:180px !important; }
-table[class=w255], td[class=w255], img[class=w255] { width:185px !important; }
-table[class=w275], td[class=w275], img[class=w275] { width:135px !important; }
-table[class=w280], td[class=w280], img[class=w280] { width:135px !important; }
-table[class=w300], td[class=w300], img[class=w300] { width:140px !important; }
-table[class=w325], td[class=w325], img[class=w325] { width:95px !important; }
-table[class=w360], td[class=w360], img[class=w360] { width:140px !important; }
-table[class=w410], td[class=w410], img[class=w410] { width:180px !important; }
-table[class=w470], td[class=w470], img[class=w470] { width:200px !important; }
-table[class=w580], td[class=w580], img[class=w580] { width:280px !important; }
-table[class=w640], td[class=w640], img[class=w640] { width:300px !important; }
-table[class*=hide], td[class*=hide], img[class*=hide], p[class*=hide], span[class*=hide] { display:none !important; }
-table[class=h0], td[class=h0] { height: 0 !important; }
-p[class=footer-content-left] { text-align: center !important; }
-#headline p { font-size: 30px !important; }
-.article-content, #left-sidebar{ -webkit-text-size-adjust: 90% !important; -ms-text-size-adjust: 90% !important; }
-.header-content, .footer-content-left {-webkit-text-size-adjust: 80% !important; -ms-text-size-adjust: 80% !important;}
-img { height: auto; line-height: 100%;}
- } 
-/* Client-specific Styles */
-#outlook a { padding: 0; }	/* Force Outlook to provide a "view in browser" button. */
-body { width: 100% !important; }
-.ReadMsgBody { width: 100%; }
-.ExternalClass { width: 100%; display:block !important; } /* Force Hotmail to display emails at full width */
-/* Reset Styles */
-/* Add 100px so mobile switch bar doesn't cover street address. */
-body { background-color: #ececec; margin: 0; padding: 0; }
-img { outline: none; text-decoration: none; display: block;}
-br, strong br, b br, em br, i br { line-height:100%; }
-h1, h2, h3, h4, h5, h6 { line-height: 100% !important; -webkit-font-smoothing: antialiased; }
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { color: blue !important; }
-h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {	color: red !important; }
-/* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
-h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited { color: purple !important; }
-/* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */  
-table td, table tr { border-collapse: collapse; }
-.yshortcuts, .yshortcuts a, .yshortcuts a:link,.yshortcuts a:visited, .yshortcuts a:hover, .yshortcuts a span {
-color: black; text-decoration: none !important; border-bottom: none !important; background: none !important;
-}	/* Body text color for the New Yahoo.  This example sets the font of Yahoo's Shortcuts to black. */
-/* This most probably won't work in all email clients. Don't include code blocks in email. */
-code {
-  white-space: normal;
-  word-break: break-all;
-}
-#background-table { background-color: #ececec; }
-/* Webkit Elements */
-#top-bar { border-radius:6px 6px 0px 0px; -moz-border-radius: 6px 6px 0px 0px; -webkit-border-radius:6px 6px 0px 0px; -webkit-font-smoothing: antialiased; background-color: #4b4044; color: #72a6a6; }
-#top-bar a { font-weight: bold; color: #72a6a6; text-decoration: none;}
-#footer { border-radius:0px 0px 6px 6px; -moz-border-radius: 0px 0px 6px 6px; -webkit-border-radius:0px 0px 6px 6px; -webkit-font-smoothing: antialiased; }
-/* Fonts and Content */
-body, td { font-family: HelveticaNeue, sans-serif; }
-.header-content, .footer-content-left, .footer-content-right { -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }
-/* Prevent Webkit and Windows Mobile platforms from changing default font sizes on header and footer. */
-.header-content { font-size: 12px; color: #72a6a6; }
-.header-content a { font-weight: bold; color: #72a6a6; text-decoration: none; }
-#headline p { color: #72a6a6; font-family: HelveticaNeue, sans-serif; font-size: 36px; text-align: center; margin-top:0px; margin-bottom:30px; }
-#headline p a { color: #72a6a6; text-decoration: none; }
-.article-title { font-size: 18px; line-height:24px; color: #d9653b; font-weight:bold; margin-top:0px; margin-bottom:18px; font-family: HelveticaNeue, sans-serif; }
-.article-title a { color: #d9653b; text-decoration: none; }
-.article-title.with-meta {margin-bottom: 0;}
-.article-meta { font-size: 13px; line-height: 20px; color: #ccc; font-weight: bold; margin-top: 0;}
-.article-content { font-size: 13px; line-height: 18px; color: #444444; margin-top: 0px; margin-bottom: 18px; font-family: HelveticaNeue, sans-serif; }
-.article-content a { color: #7f8c4f; font-weight:bold; text-decoration:none; }
-.article-content img { max-width: 100% }
-.article-content ol, .article-content ul { margin-top:0px; margin-bottom:18px; margin-left:19px; padding:0; }
-.article-content li { font-size: 13px; line-height: 18px; color: #444444; }
-.article-content li a { color: #7f8c4f; text-decoration:underline; }
-.article-content p {margin-bottom: 15px;}
-.footer-content-left { font-size: 12px; line-height: 15px; color: #72a6a6; margin-top: 0px; margin-bottom: 15px; }
-.footer-content-left a { color: #d5e9e7; font-weight: bold; text-decoration: none; }
-.footer-content-right { font-size: 11px; line-height: 16px; color: #72a6a6; margin-top: 0px; margin-bottom: 15px; }
-.footer-content-right a { color: #d5e9e7; font-weight: bold; text-decoration: none; }
-#footer { background-color: #4b4c44; color: #72a6a6; }
-#footer a { color: #d5e9e7; text-decoration: none; font-weight: bold; }
-#permission-reminder { white-space: normal; }
-#street-address { color: #d5e9e7; white-space: normal; }
-</style>
-<!--[if gte mso 9]>
-<style _tmplitem="126" >
-.article-content ol, .article-content ul {
-   margin: 0 0 0 24px;
-   padding: 0;
-   list-style-position: inside;
-}
-</style>
-<![endif]--></head><body><table width="100%" cellpadding="0" cellspacing="0" border="0" id="background-table">
-	<tbody><tr>
-		<td align="center" bgcolor="#ececec">
-        	<table class="w640" style="margin:0 10px;" width="640" cellpadding="0" cellspacing="0" border="0">
-            	<tbody><tr><td class="w640" width="640" height="20"></td></tr>
-                
-            	<tr>
-                	<td class="w640" width="640">
-                        <table id="top-bar" class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#d5e9e7">
-    <tbody><tr>
-        <td class="w15" width="15"></td>
-        <td class="w325" width="350" valign="middle" align="left">
-            <table class="w325" width="350" cellpadding="0" cellspacing="0" border="0">
-                <tbody><tr><td class="w325" width="350" height="8"></td></tr>
-            </tbody></table>
-            <div class="header-content"><webversion><a href="http://liquorprices.herokuapp.com">Go To Site</a></webversion></div>
-            <table class="w325" width="350" cellpadding="0" cellspacing="0" border="0">
-                <tbody><tr><td class="w325" width="350" height="8"></td></tr>
-            </tbody></table>
-        </td>
-        <td class="w30" width="30"></td>
-        <td class="w255" width="255" valign="middle" align="right">
-            <table class="w255" width="255" cellpadding="0" cellspacing="0" border="0">
-                <tbody><tr><td class="w255" width="255" height="8"></td></tr>
-            </tbody></table>
-            <table cellpadding="0" cellspacing="0" border="0">
-    <tbody><tr>
-        
-    </tr>
-</tbody></table>
-            <table class="w255" width="255" cellpadding="0" cellspacing="0" border="0">
-                <tbody><tr><td class="w255" width="255" height="8"></td></tr>
-            </tbody></table>
-        </td>
-        <td class="w15" width="15"></td>
-    </tr>
-</tbody></table>
-                        
-                    </td>
-                </tr>
-                <tr>
-                <td id="header" class="w640" width="640" align="center" bgcolor="#d5e9e7">
-    
-    <table class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
-        <tbody><tr><td class="w30" width="30"></td><td class="w580" width="580" height="30"></td><td class="w30" width="30"></td></tr>
-        <tr>
-            <td class="w30" width="30"></td>
-            <td class="w580" width="580">
-                <div align="center" id="headline">
-                    <p>
-                        <strong><singleline label="Title">Liquor Prices</singleline></strong>
-                    </p>
-                </div>
-            </td>
-            <td class="w30" width="30"></td>
-        </tr>
-    </tbody></table>
-    
-    
-</td>
-                </tr>
-                
-                <tr><td class="w640" width="640" height="30" bgcolor="#ffffff"></td></tr>
-                <tr id="simple-content-row"><td class="w640" width="640" bgcolor="#ffffff">
-    <table align="left" class="w640" width="640" cellpadding="0" cellspacing="0" border="0">
-        <tbody><tr>
-            <td class="w30" width="30"></td>
-            <td class="w580" width="580">
-                <repeater>
-                    {{#messages}}
-                    <layout label="Text only">
-                        <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
-                            <tbody><tr>
-                                <td class="w580" width="580">
-                                    <p align="left" class="article-title"><singleline label="Title"><a href="http://liquorprices.herokuapp.com/#/detail/{{itemId}}">{{name}}</a></singleline></p>
-                                    <div align="left" class="article-content">
-                                        <multiline label="Description">{{message}}</multiline>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr><td class="w580" width="580" height="10"></td></tr>
-                        </tbody></table>
-                    </layout>
-					{{/messages}}
-                </repeater>
-            </td>
-            <td class="w30" width="30"></td>
-        </tr>
-    </tbody></table>
-</td></tr>
-                <tr><td class="w640" width="640" height="15" bgcolor="#ffffff"></td></tr>
-                
-                <tr>
-                <td class="w640" width="640">
-    <table id="footer" class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#4b4c44">
-        <tbody><tr><td class="w30" width="30"></td><td class="w580 h0" width="360" height="30"></td><td class="w0" width="60"></td><td class="w0" width="160"></td><td class="w30" width="30"></td></tr>
-        <tr>
-            <td class="w30" width="30"></td>
-            <td class="w580" width="360" valign="top">
-            <span class="hide"><p id="permission-reminder" align="left" class="footer-content-left"></p></span>
-            <p align="left" class="footer-content-left"><preferences lang="en"><a href="http://liquorprices.herokuapp.com/#/subscriptions/{{email}}">Manage your subscription</a></preferences></p>
-            </td>
-            <td class="hide w0" width="60"></td>
-            <td class="hide w0" width="160" valign="top">
-            <p id="street-address" align="right" class="footer-content-right"></p>
-            </td>
-            <td class="w30" width="30"></td>
-        </tr>
-        <tr><td class="w30" width="30"></td><td class="w580 h0" width="360" height="15"></td><td class="w0" width="60"></td><td class="w0" width="160"></td><td class="w30" width="30"></td></tr>
-    </tbody></table>
-</td>
-                </tr>
-                <tr><td class="w640" width="640" height="60"></td></tr>
-            </tbody></table>
-        </td>
-	</tr>
-</tbody></table></body></html>
+<html><head>	
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Liquor Prices Updates</title>
+      <style type="text/css">
+         /* Client-specific Styles */
+         #outlook a {padding:0;} /* Force Outlook to provide a "view in browser" menu link. */
+         body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0;}
+         /* Prevent Webkit and Windows Mobile platforms from changing default font sizes, while not breaking desktop design. */
+         .ExternalClass {width:100%;} /* Force Hotmail to display emails at full width */
+         .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;} /* Force Hotmail to display normal line spacing.*/
+         #backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+         img {outline:none; text-decoration:none;border:none; -ms-interpolation-mode: bicubic;}
+         a img {border:none;}
+         .image_fix {display:block;}
+         p {margin: 0px 0px !important;}
+         table td {border-collapse: collapse;}
+
+         table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+         /*a {color: #e95353;text-decoration: none;text-decoration:none!important;}*/
+         /*STYLES*/
+         table[class=full] { width: 100%; clear: both; }
+         
+         /*################################################*/
+         /*IPAD STYLES*/
+         /*################################################*/
+         @media only screen and (max-width: 640px) {
+         a[href^="tel"], a[href^="sms"] {
+         text-decoration: none;
+         color: #ffffff; /* or whatever your want */
+         pointer-events: none;
+         cursor: default;
+         }
+         .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+         text-decoration: default;
+         color: #ffffff !important;
+         pointer-events: auto;
+         cursor: default;
+         }
+         table[class=devicewidth] {width: 440px!important;text-align:center!important;}
+         td[class=devicewidth] {width: 440px!important;text-align:center!important;}
+         table[class=devicewidthinner] {width: 420px!important;text-align:center!important;}
+         td[class=devicewidthinner] {width: 420px!important;text-align:center!important;}
+         table[class="emhide"]{display: none!important;}
+         td[class="emhide"]{display: none!important;}
+         table[class="sixcol"]{width:;height:;}
+         td[class="sixcol"]{width:;height:;}
+         td[class="mobileheight"]{height:20px!important;}
+         td[class="mobiletitle"]{font-size:24px!important;line-height:30px!important;}
+         td[class="menu"]{font-size: 13px!important;}
+         img[class="smallbanner"]{width:440px!important;height:90px!important;}
+
+
+         }
+         /*##############################################*/
+         /*IPHONE STYLES*/
+         /*##############################################*/
+         @media only screen and (max-width: 480px) {
+         a[href^="tel"], a[href^="sms"] {
+         text-decoration: none;
+         color: #ffffff; /* or whatever your want */
+         pointer-events: none;
+         cursor: default;
+         }
+         .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+         text-decoration: default;
+         color: #ffffff !important; 
+         pointer-events: auto;
+         cursor: default;
+         }
+         table[class=devicewidth] {width: 280px!important;text-align:center!important;}
+         td[class=devicewidth] {width: 440px!important;text-align:center!important;}
+         table[class=devicewidthinner] {width: 260px!important;text-align:center!important;}
+         td[class=devicewidthinner] {width: 260px!important;text-align:center!important;}
+         table[class="emhide"]{display: none!important;}
+         td[class="emhide"]{display: none!important;}
+         table[class="sixcol"]{width:;height:;}
+         td[class="sixcol"]{width:;height:;}
+         td[class="mobileheight"]{height:20px!important;}
+         td[class="mobiletitle"]{font-size:24px!important;line-height:30px!important;}
+         td[class="menu"]{font-size: 13px!important;}
+         img[class="smallbanner"]{width:280px!important;height:57px!important;}
+         }
+
+      </style>
+
+      
+   
+</head><body><div class="block" style="display: block;">
+	<!-- Start of header -->
+
+	<table width="100%" bgcolor="#00496d" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" module="header">
+		<tbody>
+			<tr>
+				<td>
+					<table width="616" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+						<tbody>
+							<tr>
+								<td>
+									<table width="586" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+										<tbody>
+
+											<tr>
+												<td>
+													<!-- end of menu -->
+
+													<table width="586" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+														<tbody>
+															<!-- Spacing -->
+
+															<tr>
+																<td width="100%" height="40" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;" class="mobileheight">
+																</td>
+															</tr>
+															<!-- /Spacing -->
+
+															<tr>
+																<td>
+																	<table width="586" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner">
+																		<tbody>
+																			<!-- Title -->
+
+																			<tr>
+																				<td style="font-family: 'Myriad Pro', sans-serif; font-size: 28px; color: rgb(255, 255, 255); text-align: center; line-height: 34px; position: relative;" emtitle="banner-title">
+																					Liquor Prices
+																				</td>
+																			</tr>
+																			<!-- End of Title -->
+
+																			<!-- spacing -->
+
+																			<tr>
+																				<td height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;" class="mobileheight">
+																				</td>
+																			</tr>
+																			<!-- /spacing -->
+
+																			<!-- content -->
+
+																			<tr>
+																				<td style="font-family: 'Myriad Pro', sans-serif; font-size: 14px; color: rgb(255, 255, 255); text-align: center; line-height: 24px; position: relative;" empara="banner-paragraph">
+																					Your guide to the best montgomery county liquor prices!
+																				</td>
+																			</tr>
+																			<!-- End of content -->
+
+																			<!-- Spacing -->
+
+																			<tr>
+																				<td width="100%" height="50" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;" class="mobileheight">
+																				</td>
+																			</tr>
+																			<!-- Spacing -->
+
+																		</tbody>
+																	</table>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- End of header -->
+
+</div>
+<div class="block">
+	<!-- Start of txtblock -->
+
+	<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" module="txtblock">
+		{{#messages}}
+		<tbody>
+			<tr>
+				<td>
+					<table width="616" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+						<tbody>
+							<!-- Spacing -->
+
+							<tr>
+								<td width="100%" height="33" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+							<tr>
+								<td>
+									<table width="586" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+										<tbody>
+											<tr>
+												<td>
+													<table width="586" align="center" border="0" cellpadding="0" cellspacing="0" class="devicewidthinner">
+														<tbody>
+															<!-- title -->
+
+															<tr>
+																<td style="font-family: 'Myriad Pro', sans-serif; font-size: 20px; font-weight: bold; color: rgb(52, 73, 94); text-align: left; line-height: 20px; position: relative;" emtitle="textblock-title">
+																	<a href="http://liquorprices.herokuapp.com/#/detail/{{itemId}}">{{name}}</a>
+																</td>
+															</tr>
+															<!-- end of title -->
+
+															<!-- Spacing -->
+
+															<tr>
+																<td width="100%" height="15" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
+																</td>
+															</tr>
+															<!-- /Spacing -->
+
+															<!-- content -->
+
+															<tr>
+																<td style="font-family: 'Myriad Pro', sans-serif; font-size: 14px; color: rgb(102, 102, 102); text-align: left; line-height: 22px; position: relative;" empara="textblock-para">
+																	{{message}}
+																</td>
+															</tr>
+															<!-- end of content -->
+
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+							<tr>
+								<td width="100%" height="33" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+		{{/messages}}
+	</table>
+	<!-- End of txtblock -->
+
+</div>
+<div class="block">
+	<!-- Start of seperator -->
+
+	<table width="100%" bgcolor="#ffffff" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" module="seperator">
+		<tbody>
+			<tr>
+				<td>
+					<table width="616" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+						<tbody>
+							<!-- Spacing -->
+
+							<tr>
+								<td width="100%" height="20" style="font-size: 1px; line-height: 1px; position: relative;" empara="seperator">
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- End of seperator -->
+
+</div>
+<div class="block">
+	<!-- Start of footermenu -->
+
+	<table width="100%" bgcolor="#f9f9f9" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" module="footermenu">
+		<tbody>
+			<tr>
+				<td>
+					<table width="616" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+						<tbody>
+							<!-- Spacing -->
+
+							<tr>
+								<td width="100%" height="10" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+							<tr>
+								<td>
+									<table width="586" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+										<tbody>
+											<tr>
+												<td>
+													<table width="300" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+														<tbody>
+															<tr>
+																<td align="center" style="font-family: 'Myriad Pro', sans-serif; font-size: 12px; color: rgb(102, 102, 102); text-align: center; line-height: 20px; position: relative;" empara="footer-menu1">
+																	<a style="color:#666666; text-decoration:underline;" href="http://liquorprices.herokuapp.com">Home</a>
+																</td>
+																<td width="20" align="center" style="font-family: 'Myriad Pro', sans-serif; font-size: 8px; color: rgb(102, 102, 102); text-align: center; line-height: 20px; position: relative;" empara="footer-menu2">
+																	<a style="color:#666666; text-decoration:none;" href="#">&gt;</a>
+																</td>
+																<td align="center" style="font-family: 'Myriad Pro', sans-serif; font-size: 12px; color: rgb(102, 102, 102); text-align: center; line-height: 20px; position: relative;" empara="footer-menu3">
+																	<a style="color:#666666; text-decoration:underline;" href="http://liquorprices.herokuapp.com/#/subscriptions/{{email}}">Manage Your Subscriptions</a>
+																</td>
+																<td width="20" align="center" style="font-family: 'Myriad Pro', sans-serif; font-size: 8px; color: rgb(102, 102, 102); text-align: center; line-height: 20px; position: relative;" empara="footer-menu6">
+																	<a style="color:#666666; text-decoration:none;" href="#">&gt;</a>
+																</td>
+																<td align="center" style="font-family: 'Myriad Pro', sans-serif; font-size: 12px; color: rgb(102, 102, 102); text-align: center; line-height: 20px; position: relative;" empara="footer-menu7">
+																	<a style="color:#666666; text-decoration:underline;" href="http://liquorprices.herokuapp.com">Best Sales</a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+							<tr>
+								<td width="100%" height="10" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- End of footermenu -->
+
+</div>
+<div class="block">
+	<!-- Start of disclaimer -->
+
+	<table width="100%" bgcolor="#f9f9f9" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" module="disclaimer">
+		<tbody>
+			<tr>
+				<td>
+					<table width="616" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+						<tbody>
+							<!-- Spacing -->
+
+							<tr>
+								<td width="100%" height="10" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+							<tr>
+								<td>
+									<table width="586" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
+										<tbody>
+											<tr>
+												<td>
+													<table width="500" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidthinner">
+														<tbody>
+															<tr>
+																<td align="center" style="font-family: 'Myriad Pro', sans-serif; font-size: 12px; color: rgb(102, 102, 102); text-align: center; line-height: 20px; position: relative;" empara="footer-text">
+																	You're receiving this email because you signed up for liquor alerts. You can <a style="color:#666666; text-decoration:underline;" href="http://liquorprices.herokuapp.com/#/subscriptions/{{email}}">unsubscribe</a> from these emails or change your subscriptions.
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+							<tr>
+								<td width="100%" height="10" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">
+								</td>
+							</tr>
+							<!-- Spacing -->
+
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- End of disclaimer -->
+
+</div></body></html>

@@ -1,10 +1,7 @@
 var mongo = require('mongodb');
 var handlebars = require('handlebars');
-var fs = require('fs');
 var tools = require('./tools');
 var datastore = require('./datastore');
-
-var emailTemplate = '';
 
 module.exports = {
 
@@ -212,23 +209,8 @@ var mapDBResults = function(results){
 	return resultsList;
 };
 
-var getEmailTemplate = function(callback){
-	if (emailTemplate === ''){
-		fs.readFile('./backend/emailTemplate.html', 'utf8', function (err,source) {
-		  if (err) {
-		    console.log(err);
-		  }else {
-		  	emailTemplate = source;
-			callback(emailTemplate);
-		  }
-		});
-	}else {
-		callback(emailTemplate);
-	}
-}
-
 var getEmailMessage = function(queue, email, callback){
-	getEmailTemplate(function(source){
+	tools.getEmailTemplate(function(source){
 		var template = handlebars.compile(source);
 		var data = { "messages": queue, "email": email};
 		var result = template(data);

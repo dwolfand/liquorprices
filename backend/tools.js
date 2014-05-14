@@ -1,5 +1,8 @@
 var moment = require('moment');
 var request = require('request');
+var fs = require('fs');
+
+var emailTemplate = '';
 
 module.exports = {
 	isEmptyObject: function(obj) {
@@ -46,5 +49,19 @@ module.exports = {
 			}
 		};
 		request(options, requestCallback);
+	},
+	getEmailTemplate: function(callback){
+		if (emailTemplate === ''){
+			fs.readFile('./backend/emailTemplate.html', 'utf8', function (err,source) {
+			  if (err) {
+			    console.log(err);
+			  }else {
+			  	emailTemplate = source;
+				callback(emailTemplate);
+			  }
+			});
+		}else {
+			callback(emailTemplate);
+		}
 	}
 };
