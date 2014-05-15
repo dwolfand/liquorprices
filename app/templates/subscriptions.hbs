@@ -13,10 +13,18 @@
 					<div class="liquor-container" {{bind-attr style=bgImageStyle}}>
 						<div class="liquor-name">{{longdescription}} - {{size}}</div>
 						<div class="remove-button">
-							<button {{action 'removeSubscription' this}} class="btn btn-default">Remove</button>
+							<button class="btn btn-primary" onclick="return false;" data-toggle="modal" data-target=".price-{{unbound itemId}}">Remove</button>
 						</div>
 					</div>
 				</a>
+				<div class="modal subscription-modal fade price-{{unbound itemId}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-sm">
+				    <div class="modal-content">
+				      <div class="description">Are you sure that you want to remove your price drop alert for {{longdescription}} - {{size}}?</div>
+				      <div class="button"><button {{action 'removeSubscription' this}} class="btn btn-default">Remove</button></div>
+				    </div>
+				  </div>
+				</div>
 			</div>
 		{{/each}}
 	</div>
@@ -33,10 +41,18 @@
 					<div class="liquor-container" {{bind-attr style=bgImageStyle}}>
 						<div class="liquor-name">{{longdescription}} - {{size}}</div>
 						<div class="remove-button">
-							<button {{action 'removeSubscription' this}} class="btn btn-default">Remove</button>
+							<button class="btn btn-primary" onclick="return false;" data-toggle="modal" data-target=".stock-{{unbound itemId}}">Remove</button>
 						</div>
 					</div>
 				</a>
+				<div class="modal subscription-modal fade stock-{{unbound itemId}}" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+				  <div class="modal-dialog modal-sm">
+				    <div class="modal-content">
+				      <div class="description">Are you sure that you want to remove your in stock alert for {{longdescription}} - {{size}}?</div>
+				      <div class="button"><button {{action 'removeSubscription' this}} class="btn btn-default">Remove</button></div>
+				    </div>
+				  </div>
+				</div>
 			</div>
 		{{/each}}
 	</div>

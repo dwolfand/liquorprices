@@ -8,6 +8,21 @@ module.exports = App.LiquorDetail = DS.Model.extend({
   description: attr(),
   size: attr(),
   price: attr(),
+  pricePerMl: function() {
+    var curSizeInMl;
+    var curPrice;
+    curPrice = this.get('cursaleprice') ? this.get('cursaleprice') : this.get('price');
+    if (this.get('size').indexOf('ML')>0){
+      curSizeInMl = this.get('size').replace('ML','');
+    }else if (this.get('size').indexOf('L') === this.get('size').length-1){
+      curSizeInMl = parseFloat(this.get('size').replace('L',''))*1000;
+    }
+
+    if (curSizeInMl){
+      return '$'+(parseFloat(curPrice)/parseFloat(curSizeInMl)).toFixed(4);
+    }
+    return "N/A";
+  }.property('imgsrc'),
   category: attr(),
   imgsrc: attr(),
   imageUrl: function() {

@@ -18,36 +18,36 @@
         <li class="dropdown" id="scotch">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Scotch<b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li id="scotch-all"><a href="#/liquors/SCOTCH" {{action 'closemenu' 'scotch-all'}}>All</a></li>
+            <li id="scotch-all"><a href="#/liquors/SCOTCH" {{action 'navigate' 'scotch-all'}}>All</a></li>
             <li></li>
             <li class="divider"></li>
-            <li id="scotch-blended"><a href="#/specificLiquors/DOMESTIC SCOTCH,IMPORTED SCOTCH" {{action 'closemenu' 'scotch-blended'}}>Blended</a></li>
-            <li id="scotch-single"><a href="#/specificLiquors/SINGLE MALT SCOTCH" {{action 'closemenu' 'scotch-single'}}>Single Malt</a></li>
+            <li id="scotch-blended"><a href="#/specificLiquors/DOMESTIC SCOTCH,IMPORTED SCOTCH" {{action 'navigate' 'scotch-blended'}}>Blended</a></li>
+            <li id="scotch-single"><a href="#/specificLiquors/SINGLE MALT SCOTCH" {{action 'navigate' 'scotch-single'}}>Single Malt</a></li>
           </ul>
         </li>
         <li class="dropdown" id="vodka">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Vodka<b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li id="vodka-all"><a href="#/liquors/VODKA" {{action 'closemenu' 'vodka-all'}}>All</a></li>
+            <li id="vodka-all"><a href="#/liquors/VODKA" {{action 'navigate' 'vodka-all'}}>All</a></li>
             <li class="divider"></li>
-            <li id="vodka-domestic"><a href="#/specificLiquors/DOMESTIC VODKA,DOMESTIC VODKA FLAVORS" {{action 'closemenu' 'vodka-domestic'}}>Domestic</a></li>
-            <li id="vodka-imported"><a href="#/specificLiquors/IMPORTED VODKA,IMPORTED VODKA FLAVORS" {{action 'closemenu' 'vodka-imported'}}>Imported</a></li>
+            <li id="vodka-domestic"><a href="#/specificLiquors/DOMESTIC VODKA,DOMESTIC VODKA FLAVORS" {{action 'navigate' 'vodka-domestic'}}>Domestic</a></li>
+            <li id="vodka-imported"><a href="#/specificLiquors/IMPORTED VODKA,IMPORTED VODKA FLAVORS" {{action 'navigate' 'vodka-imported'}}>Imported</a></li>
           </ul>
         </li>
-        <li id="rum"><a href="#/liquors/RUM" {{action 'closemenu' 'rum'}}>Rum</a></li>
-        <li id="whiskey"><a href="#/liquors/WHISKEY" {{action 'closemenu' 'whiskey'}}>Whiskey</a></li>
-        <li id="tequila"><a href="#/liquors/TEQUILA" {{action 'closemenu' 'tequila'}}>Tequila</a></li>
-        <li id="gin"><a href="#/liquors/GIN" {{action 'closemenu' 'gin'}}>Gin</a></li>
+        <li id="rum"><a href="#/liquors/RUM" {{action 'navigate' 'rum'}}>Rum</a></li>
+        <li id="whiskey"><a href="#/liquors/WHISKEY" {{action 'navigate' 'whiskey'}}>Whiskey</a></li>
+        <li id="tequila"><a href="#/liquors/TEQUILA" {{action 'navigate' 'tequila'}}>Tequila</a></li>
+        <li id="gin"><a href="#/liquors/GIN" {{action 'navigate' 'gin'}}>Gin</a></li>
         <li class="dropdown" id="other">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Other<b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li id="other-liquors"><a href="#/liquors/OTHER_LIQUORS" {{action 'closemenu' 'other-liquors'}}>Other Liquors</a></li>
-            <li id="mixers"><a href="#/liquors/MIXERS" {{action 'closemenu' 'mixers'}}>Mixers</a></li>
-            <li id="sparkling"><a href="#/liquors/SPARKLING_WINE" {{action 'closemenu' 'sparkling'}}>Sparkling Wine</a></li>
-            <li id="american"><a href="#/liquors/AMERICAN_WINE" {{action 'closemenu' 'american'}}>American Wine</a></li>
-            <li id="french"><a href="#/liquors/FRENCH_WINE" {{action 'closemenu' 'french'}}>French Wine</a></li>
-            <li id="imported-wine"><a href="#/liquors/IMPORTED_WINE" {{action 'closemenu' 'imported-wine'}}>Imported Wine</a></li>
-            <li id="other-wine"><a href="#/liquors/OTHER_WINE" {{action 'closemenu' 'other-wine'}}>Other Wine</a></li>
+            <li id="other-liquors"><a href="#/liquors/OTHER_LIQUORS" {{action 'navigate' 'other-liquors'}}>Other Liquors</a></li>
+            <li id="mixers"><a href="#/liquors/MIXERS" {{action 'navigate' 'mixers'}}>Mixers</a></li>
+            <li id="sparkling"><a href="#/liquors/SPARKLING_WINE" {{action 'navigate' 'sparkling'}}>Sparkling Wine</a></li>
+            <li id="american"><a href="#/liquors/AMERICAN_WINE" {{action 'navigate' 'american'}}>American Wine</a></li>
+            <li id="french"><a href="#/liquors/FRENCH_WINE" {{action 'navigate' 'french'}}>French Wine</a></li>
+            <li id="imported-wine"><a href="#/liquors/IMPORTED_WINE" {{action 'navigate' 'imported-wine'}}>Imported Wine</a></li>
+            <li id="other-wine"><a href="#/liquors/OTHER_WINE" {{action 'navigate' 'other-wine'}}>Other Wine</a></li>
           </ul>
         </li>
       </ul>
@@ -61,4 +61,14 @@
   </div><!-- /.container-fluid -->
 </nav>
 {{outlet}}
+</div>
+
+<!-- Search String Length Error -->
+<div class="modal fade searchStringLengthError" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="description">Please make your search at least 3 letters</div>
+      <div class="button"><button class="btn btn-default" data-dismiss="modal">Ok</button></div>
+    </div>
+  </div>
 </div>

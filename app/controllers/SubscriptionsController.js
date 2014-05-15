@@ -6,6 +6,7 @@ module.exports = App.SubscriptionsController = Ember.ObjectController.extend({
     removeSubscription: function(subscription) {
       console.log(this.get("account"));
       console.log(subscription.get("itemId"));
+      $('.'+subscription.get("subscriptionType")+'-'+subscription.get("itemId")).modal('toggle');
       subscription.deleteRecord();
       subscription.save();
     }

@@ -4,14 +4,14 @@ module.exports = App.ApplicationController = Ember.Controller.extend({
   searchstring:'',
   actions: {
     search: function() {
-      this.send('closemenu');
+      $('#liquorprices-menu').removeClass('in'); //close menu if its collapsed and open
       if (this.searchstring.length < 3){
-      	alert("Please make your search at least 3 letters");
+      	$('.searchStringLengthError').modal('toggle');
       }else{
       	this.transitionToRoute("/search/"+this.searchstring);
       }
     },
-    closemenu: function(pageId){
+    navigate: function(pageId){
     	var url='';
     	$('#scotch').removeClass('active');
     	$('#scotch-all').removeClass('active');

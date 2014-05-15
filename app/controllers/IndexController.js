@@ -10,5 +10,10 @@ module.exports = App.IndexController = Ember.ArrayController.extend({
   rumTitle: "Rum",
   tequilaTitle: "Tequila",
   whiskeyTitle: "Whiskey",
-  otherTitle: "Other"
+
+  scotchUrl: "#/liquors/SCOTCH",
+  vodkaUrl: "#/liquors/VODKA",
+  rumUrl: "#/liquors/RUM",
+  tequilaUrl: "#/liquors/TEQUILA",
+  whiskeyUrl: "#/liquors/WHISKEY"
 });
