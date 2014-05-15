@@ -1,14 +1,9 @@
 var mongo = require('mongodb');
 var tools = require('./tools');
 
-var mongoUri = process.env.MONGOHQ_URL;
-
-var dbConnection;
-var collections = {};
-
 module.exports = {
     getAllLiquors: function(collectionTarget, limit, category, parentcategory, searchString, mindiscount, callback){
-        this.getCollection(collectionTarget, function(collection) {
+        tools.getCollection(collectionTarget, function(collection) {
         	query = {};
         	if (category){
         		query.category = {"$in":category.split(",")};
@@ -46,7 +41,7 @@ module.exports = {
     },
 
     getLiquorById: function(collectionTarget, _id, inventoryFunction, callback){
-        this.getCollection(collectionTarget, function(collection) {
+        tools.getCollection(collectionTarget, function(collection) {
 			collection.find({"_id":_id},{},{}).toArray(function(err, results){
 				inventoryFunction(_id, function(inventoryResult){
 					if (results[0]){
@@ -65,7 +60,7 @@ module.exports = {
     getSubscriptions: function(collectionTarget, email, callback){
     	emailSubscription = {_id:email};
     	fields = {size: 1, imgsrc: 1, longdescription: 1, parentcategory: 1};
-        this.getCollection(collectionTarget, function(collection) {
+        tools.getCollection(collectionTarget, function(collection) {
 			collection.find({"priceEmails":email},fields,{}).toArray(function(err, priceResults){
 				emailSubscription.priceSubscriptions = priceResults;
 				collection.find({"stockEmails":email},fields,{}).toArray(function(err, stockResults){
@@ -81,7 +76,7 @@ module.exports = {
     		subType = identifier.slice(identifier.indexOf("---")+3,identifier.indexOf("---")+6), 
     		email = identifier.slice(0,identifier.indexOf("---"));
 
-		this.getCollection(collectionTarget, function(collection) {
+		tools.getCollection(collectionTarget, function(collection) {
 			if (subType === 'stk'){
 				collection.update({_id:itemId}, {'$pull': {'stockEmails':email}}, {w: 1}, function(err, result) {					
 					if (err){
@@ -122,7 +117,7 @@ module.exports = {
 		  parentcategory: 1,
 		  discount: 1};
     	options = {sort:[["discount","desc"]],limit:limit};
-        this.getCollection(collectionTarget, function(collection) {
+        tools.getCollection(collectionTarget, function(collection) {
         	query.parentcategory = {"$in":"VODKA".split(",")};
 			collection.find(query,fields,options).toArray(function(err, vodkaResults){
 				returnResults = returnResults.concat(vodkaResults);
@@ -148,7 +143,7 @@ module.exports = {
     },
 
     addEmailAlert: function(collectionTarget, itemId, email, isPrice, isStock){
-		this.getCollection(collectionTarget, function(collection) {
+		tools.getCollection(collectionTarget, function(collection) {
 			if (isPrice==='true'){
 				collection.update({_id:itemId}, {'$addToSet': {priceEmails:email}}, {w: 1}, function(err, result) {
 					if (err){
@@ -169,9 +164,9 @@ module.exports = {
 	},
 
 	copyCollection: function(fromCollection, toCollection){
-		this.getCollection(fromCollection, function(origcollection) {
+		tools.getCollection(fromCollection, function(origcollection) {
 			origcollection.find().toArray(function(err, results){
-				this.getCollection(toCollection, function(newcollection) {
+				tools.getCollection(toCollection, function(newcollection) {
 					for (var key in results){
 						newcollection.insert(results[key], {w:1}, function(err,rs) {
 							if (err){
@@ -186,60 +181,17 @@ module.exports = {
 	},
 
 	updateSaleFields: function(collectionTarget){
-		this.getCollection(collectionTarget, function(collection) {
+		tools.getCollection(collectionTarget, function(collection) {
 			updateSaleField(collection.find(), collection, 1);
 		});
 	},
 
 	updateDiscountFields: function(collectionTarget){
-		this.getCollection(collectionTarget, function(collection) {
+		tools.getCollection(collectionTarget, function(collection) {
 			updateDiscountField(collection.find(), collection, 1);
 		});
-	},
-
-	getCollection: function(name, callback){
-		if (!dbConnection){
-			openConnection(function(db){
-				openCollection(db, name, callback);
-			});
-		} else if (collections[name]){
-			callback(collections[name]);
-		} else {
-			openCollection(dbConnection, name, callback);
-		}
 	}
 };
-
-var openConnection = function(callback){
-	console.log("connecting to mongo db");
-	mongo.Db.connect(mongoUri, function (err, db) {
-		console.log("connected to mongo db");
-		if (!err) {
-			dbConnection = db;
-			dbConnection.on('close', function() {
-				dbConnection = null; //Remove db connection
-				collections = {}; //Remove collections
-				// connection closed
-			});
-			callback(db);
-		} else {
-			console.log("error connecting to db");
-		}
-	});
-};
-
-var openCollection = function(db, name, callback){
-	db.collection(name, function(err, collection) {
-		if (err) {
-			console.log("error opening collection: "+name);
-		}
-		else {
-			console.log("accessing collection: "+name);
-			collections[name] = collection;
-			callback(collections[name]);
-		}
-	});
-}
 
 var updateSaleField = function (itemCursor, collection, count){
 	itemCursor.nextObject(function(err, result){

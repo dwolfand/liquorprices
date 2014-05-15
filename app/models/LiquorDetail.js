@@ -11,7 +11,7 @@ module.exports = App.LiquorDetail = DS.Model.extend({
   category: attr(),
   imgsrc: attr(),
   imageUrl: function() {
-    return "http://www2.montgomerycountymd.gov/dlcsearch/"+this.get("imgsrc");
+    return "http://www2.montgomerycountymd.gov/dlcsearch/"+this.get("imgsrc").replace("_thumb","_large");
   }.property('imgsrc'),
   longdescription: attr(),
   status: attr(),

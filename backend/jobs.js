@@ -1,12 +1,11 @@
 var mongo = require('mongodb');
 var handlebars = require('handlebars');
 var tools = require('./tools');
-var datastore = require('./datastore');
 
 module.exports = {
 
 	logRunEvent: function(targetCollection, curDate){
-		datastore.getCollection(targetCollection+"-log", function(collection) {
+		tools.getCollection(targetCollection+"-log", function(collection) {
 			collection.update({type:"DBLoadEvent"}, {'$set':{type:"DBLoadEvent"}, '$push': {'runs':curDate}}, {upsert:true, w: 1}, function(err, result) {
 				if (err){
 					console.log("error adding the DBLoadEvent");
@@ -18,7 +17,7 @@ module.exports = {
 
 	sendEmailsFromQueue: function(targetCollection){
 		var curDate = new Date();
-		datastore.getCollection(targetCollection+"-email_log", function(collection) {
+		tools.getCollection(targetCollection+"-email_log", function(collection) {
 			collection.find({"queue":{"$exists": true}},{},{}).toArray(function(err, results){
 				if (err){
 					console.log("error getting emails from queue");
@@ -46,7 +45,7 @@ module.exports = {
 	},
 
 	loadLiquorsIntoDB: function(sourceLiquors, curDate, collectionTarget){
-		datastore.getCollection(collectionTarget, function(collection) {
+		tools.getCollection(collectionTarget, function(collection) {
 			//collection.remove({},function(err, removed){
 				//console.log("removed collection documents: "+removed);
 				collection.find().toArray(function(err, results){
@@ -177,7 +176,7 @@ var getUpdatesOnLiquorObjects = function(oldObj, newObj, curDate, collectionTarg
 };
 
 var scheduleEmails = function(emailType, emails, oldItem, newValue, curDate, collectionTarget){
-	datastore.getCollection(collectionTarget+'-email_log', function(collection) {
+	tools.getCollection(collectionTarget+'-email_log', function(collection) {
 		var message = '';
 		if (emailType === 'priceDrop'){
 			message = "This item's price has dropped to $"+parseFloat(newValue).toFixed(2);

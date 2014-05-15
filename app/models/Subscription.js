@@ -12,7 +12,7 @@ module.exports = App.Subscription = DS.Model.extend({
     return "http://www2.montgomerycountymd.gov/dlcsearch/"+this.get("imgsrc");
   }.property('imgsrc'),
   bgImageStyle: function() {
-    return "background-image:url('http://www2.montgomerycountymd.gov/dlcsearch/"+this.get("imgsrc")+"');";
+    return "background-image:url('http://www2.montgomerycountymd.gov/dlcsearch/"+this.get("imgsrc").replace("_thumb","_large")+"');";
   }.property('imgsrc'),
   detailUrl: function() {
     return "#/detail/"+this.get("itemId");

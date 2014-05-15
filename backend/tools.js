@@ -1,8 +1,13 @@
 var moment = require('moment');
 var request = require('request');
 var fs = require('fs');
+var mongo = require('mongodb');
 
+var dbConnection;
+var collections = {};
 var emailTemplate = '';
+var mongoUri = process.env.MONGOHQ_URL;
+var mongoUri_BackupDB = process.env.MONGO_URL_BACKUPDB;
 
 module.exports = {
 	isEmptyObject: function(obj) {
@@ -63,5 +68,70 @@ module.exports = {
 		}else {
 			callback(emailTemplate);
 		}
+	},
+	backupDB: function(fromCollection){
+		this.getCollection(fromCollection, function(sourceCollection) {
+			sourceCollection.find().toArray(function(err, sourceResults){
+				mongo.Db.connect(mongoUri_BackupDB, function (err, db) {
+					if (err) {console.log("error connecting to db");}
+					else {
+						db.collection(fromCollection+'-'+(moment(new Date()).format('YYYYMMDD-HH:mm:ss:ZZ')), function(err, backupCollection) {
+							if (err) {console.log("error opening collection");}
+							else {
+								for (var key in sourceResults){
+									backupCollection.insert(sourceResults[key], {w:1}, function(err,rs) {
+										if (err){
+											console.log("error importing item");
+											console.log(err);
+										}
+									});
+								}
+							}
+						});
+					}
+				});
+			});
+		});
+	},
+	getCollection: function(name, callback){
+		if (!dbConnection){
+			openConnection(function(db){
+				openCollection(db, name, callback);
+			});
+		} else if (collections[name]){
+			callback(collections[name]);
+		} else {
+			openCollection(dbConnection, name, callback);
+		}
 	}
+};
+
+var openConnection = function(callback){
+	console.log("connecting to mongo db");
+	mongo.Db.connect(mongoUri, function (err, db) {
+		console.log("connected to mongo db");
+		if (!err) {
+			dbConnection = db;
+			dbConnection.on('close', function() {
+				dbConnection = null; //Remove db connection
+				collections = {}; //Remove collections
+				// connection closed
+			});
+			callback(db);
+		} else {
+			console.log("error connecting to db");
+		}
+	});
+};
+var openCollection = function(db, name, callback){
+	db.collection(name, function(err, collection) {
+		if (err) {
+			console.log("error opening collection: "+name);
+		}
+		else {
+			console.log("accessing collection: "+name);
+			collections[name] = collection;
+			callback(collections[name]);
+		}
+	});
 };
