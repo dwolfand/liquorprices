@@ -163,6 +163,32 @@ module.exports = {
 		});
 	},
 
+	ensureIndexes: function(collectionTarget, callback){
+		tools.getCollection(collectionTarget, function(collection) {
+			collection.ensureIndex("parentcategory",function(err,parentcategoryresult){
+				if (err){console.log("error checking parentcategory index")}
+				else{
+					collection.ensureIndex("category",function(err,categoryresult){
+						if (err){console.log("error checking category index")}
+						else{
+							collection.ensureIndex({'discount':-1},function(err,discountresult){
+								if (err){console.log("error checking discount index")}
+								else{
+									collection.ensureIndex("longdescription",function(err,longdescriptionresult){
+										if (err){console.log("error checking longdescription index")}
+										else{
+											callback("done!");
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		});
+	},
+
 	copyCollection: function(fromCollection, toCollection){
 		tools.getCollection(fromCollection, function(origcollection) {
 			origcollection.find().toArray(function(err, results){

@@ -111,6 +111,13 @@ app.get('/backupdb', function(req, res) {
 	res.send("running...");
 });
 
+app.get('/ensureIndexes', function(req, res) {
+	var collectionTarget = req.query.db || liquorPricesCollection;
+	datastore.ensureIndexes(collectionTarget, function(result){
+		res.send(result);
+	});
+});
+
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
   console.log("Listening on " + port);
