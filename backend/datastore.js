@@ -2,7 +2,7 @@ var mongo = require('mongodb');
 var tools = require('./tools');
 
 module.exports = {
-    getAllLiquors: function(collectionTarget, limit, category, parentcategory, searchString, mindiscount, callback){
+    getAllLiquors: function(collectionTarget, limit, category, parentcategory, searchString, callback){
         tools.getCollection(collectionTarget, function(collection) {
         	query = {};
         	if (category){
@@ -13,9 +13,6 @@ module.exports = {
         	}
         	if (searchString){
         		query.longdescription = new RegExp('.*'+searchString+'.*', "i");
-        	}
-        	if (mindiscount){
-        		query.discount = {"$gt":parseFloat(mindiscount)};
         	}
         	fields = {description: 1,
 			  size: 1,
@@ -203,18 +200,6 @@ module.exports = {
 					}
 				});
 			});
-		});
-	},
-
-	updateSaleFields: function(collectionTarget){
-		tools.getCollection(collectionTarget, function(collection) {
-			updateSaleField(collection.find(), collection, 1);
-		});
-	},
-
-	updateDiscountFields: function(collectionTarget){
-		tools.getCollection(collectionTarget, function(collection) {
-			updateDiscountField(collection.find(), collection, 1);
 		});
 	}
 };

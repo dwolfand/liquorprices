@@ -62,7 +62,7 @@ app.get('/liquors', function(req, res) {
 			res.json(result);
 		});
 	}else{
-		datastore.getAllLiquors(collectionTarget, req.query.limit, req.query.category, req.query.parentcategory, req.query.searchString, req.query.mindiscount, function(result){
+		datastore.getAllLiquors(collectionTarget, req.query.limit, req.query.category, req.query.parentcategory, req.query.searchString, function(result){
 			res.json(result);
 		});
 	}
@@ -89,19 +89,6 @@ app.get('/liquorDetails/:_id', function(req, res) {
 
 app.get('/copycollection', function(req, res) {
 	datastore.copyCollection(req.query.from, req.query.to);
-	res.send("running...");
-});
-
-
-app.get('/updatesalefields', function(req, res) {
-	var collectionTarget = req.query.db || 'temp';
-	datastore.updateSaleFields(collectionTarget);
-	res.send("running...");
-});
-
-app.get('/updatediscountfields', function(req, res) {
-	var collectionTarget = req.query.db || 'temp';
-	datastore.updateDiscountFields(collectionTarget);
 	res.send("running...");
 });
 
