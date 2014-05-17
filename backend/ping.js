@@ -5,7 +5,7 @@ module.exports = {
 		//once the db load goes through, call the same method to run in the next day
 		setTimeout(this.runImportScript, 21600000); //6 hours = 21600000 MS
 		triggerDBLoad(function(response){
-			console.log("syncing db"+response);
+			console.log("syncing db:"+response);
 		});
 	},
 	runPingScript: function(){
