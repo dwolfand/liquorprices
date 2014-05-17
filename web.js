@@ -15,6 +15,7 @@ var tools = require('./backend/tools');
 var datastore = require('./backend/datastore');
 var mocoapi = require('./backend/mocoapi');
 var jobs = require('./backend/jobs');
+var ping = require('./backend/ping');
 
 var liquorPricesCollection = process.env.LIQUOR_PRICES_COLLECTION_NAME || 'liquorpricesdev';
 		
@@ -110,4 +111,6 @@ app.get('/ensureIndexes', function(req, res) {
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
   console.log("Listening on " + port);
+  setTimeout(ping.runPingScript, 30000);
+  setTimeout(ping.runImportScript, 7200000);
 });
