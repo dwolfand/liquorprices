@@ -29,9 +29,9 @@ module.exports = {
 						emails[results[key]._id] = results[key];
 					}
 					for (item in emails){
-						getEmailMessage(emails[item].queue, emails[item]._id, function(emailBody){
-							tools.sendEmail(emails[item]._id,"Liquor Updates", emailBody);
-							collection.update({_id:emails[item]._id}, {'$unset':{queue:""},'$push': {'sent':{dateSent:curDate,message:emails[item].queue}}}, {w: 1}, function(err, result) {
+						getEmailMessage(emails[item].queue, emails[item]._id, function(emailBody, emailAddr, messageQueue){
+							tools.sendEmail(emailAddr,"Liquor Updates", emailBody);
+							collection.update({_id:emailAddr}, {'$unset':{queue:""},'$push': {'sent':{dateSent:curDate,message:messageQueue}}}, {w: 1}, function(err, result) {
 								if (err){
 									console.log("error processing email queue");
 									console.log(err);
@@ -213,7 +213,7 @@ var getEmailMessage = function(queue, email, callback){
 		var template = handlebars.compile(source);
 		var data = { "messages": queue, "email": email};
 		var result = template(data);
-		callback(result);
+		callback(result, email, queue);
 	});
 	
 };
