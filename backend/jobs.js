@@ -76,8 +76,11 @@ module.exports = {
 										price: sourceLiquor.price,
 										cursaleprice: sourceLiquor.cursaleprice,
 										cursaleenddate: sourceLiquor.cursaleenddate,
+										cursalestartdate: sourceLiquor.cursalestartdate,
 										discount: sourceLiquor.discount,
 										category: sourceLiquor.category,
+										age: sourceLiquor.age,
+										proof: sourceLiquor.proof,
 										imgsrc: sourceLiquor.imgsrc,
 										longdescription: sourceLiquor.longdescription,
 										status: sourceLiquor.status,
@@ -142,13 +145,19 @@ var getUpdatesOnLiquorObjects = function(oldObj, newObj, curDate, collectionTarg
 	if (newObj.category !== oldObj.category){
 		errors.push({itemChanged:"category", oldValue:oldObj.category, newValue:newObj.category, changedDate:curDate});
 	}
-	// if (newObj.imgsrc !== oldObj.imgsrc){
+	if ((newObj.age || oldObj.age) && newObj.age !== oldObj.age){
+		errors.push({itemChanged:"age", oldValue:oldObj.age, newValue:newObj.age, changedDate:curDate});
+	}
+	if ((newObj.proof || oldObj.proof) && newObj.proof !== oldObj.proof){
+		errors.push({itemChanged:"proof", oldValue:oldObj.proof, newValue:newObj.proof, changedDate:curDate});
+	}
+	// if ((newObj.imgsrc || oldObj.imgsrc) && newObj.imgsrc !== oldObj.imgsrc){
 	// 	errors.push({itemChanged:"imgsrc", oldValue:oldObj.imgsrc, newValue:newObj.imgsrc, changedDate:curDate});
 	// }
 	if (newObj.longdescription !== oldObj.longdescription){
 		errors.push({itemChanged:"longdescription", oldValue:oldObj.longdescription, newValue:newObj.longdescription, changedDate:curDate});
 	}
-	if (newObj.status !== oldObj.status){
+	if ((newObj.status || oldObj.status) && newObj.status !== oldObj.status){
 		errors.push({itemChanged:"status", oldValue:oldObj.status, newValue:newObj.status, changedDate:curDate});
 	}
 	// Leaving this out for now until categories get ironed out

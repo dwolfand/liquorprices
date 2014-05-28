@@ -120,6 +120,7 @@ var transformMocoObjToLPObj = function (source, curDate){
 	destination.sale = [];
 	destination.cursaleprice=null;
 	destination.cursaleenddate=null;
+	destination.cursalestartdate=null;
 	if (source.saleprice !== 'N/A'){
 		destination.sale = [{'saleprice':parseFloat(source.saleprice),'saleenddate':tools.parseDate(source.saleenddate)}];
 		//console.log("display:"+new moment.utc(tools.parseDate(source.saleenddate)).format());
@@ -133,7 +134,9 @@ var transformMocoObjToLPObj = function (source, curDate){
 	destination.category = source.categoryname;
 	destination.imgsrc = source.imgsrc;
 	destination.longdescription = source.longdescription;
-	destination.status = source.qtyStatus;	
+	destination.status = source.qtyStatus;
+	destination.age = null;
+	destination.proof = null;
 	destination.lastUpdated = curDate;
 	destination.createddate = curDate; //adding this field only for initial insert
 	destination.parentcategory = null;

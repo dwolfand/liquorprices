@@ -14,6 +14,7 @@ var moment = require('moment');
 var tools = require('./backend/tools');
 var datastore = require('./backend/datastore');
 var mocoapi = require('./backend/mocoapi');
+var VAapi = require('./backend/VAapi');
 var jobs = require('./backend/jobs');
 var ping = require('./backend/ping');
 
@@ -37,6 +38,13 @@ app.get('/loaddb', function(req, res) {
 
 	//wait 2 min before sending emails
 	setTimeout(function(){jobs.sendEmailsFromQueue(collectionTarget);}, 120000);
+});
+
+app.get('/loaddbva', function(req, res) {
+	var collectionTarget = req.query.db || liquorPricesCollection+"VA";
+	var curDate = new Date();
+	VAapi.getAllLiquors(curDate, collectionTarget, jobs.loadLiquorsIntoDB);
+	res.send('importing underwayyyyy');
 });
 
 app.get('/sendemailqueue', function(req, res) {
