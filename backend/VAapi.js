@@ -2,7 +2,7 @@ var request = require('request');
 var tools = require('./tools');
 var moment = require('moment');
 var fs = require('fs');
-var $ = jQuery = require('jQuery');
+var $ = jQuery = require('jquery');
 require('./jquery.csv.js');
 
 module.exports = {
