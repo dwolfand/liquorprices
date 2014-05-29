@@ -36,14 +36,17 @@ app.get('/loaddb', function(req, res) {
 	mocoapi.getAllLiquors(curDate, recordsToImport, collectionTarget, jobs.loadLiquorsIntoDB);
 	res.send('importing underwayyyyy');
 
+	//wait 1 min before running va import
+	setTimeout(function(){VAapi.getAllLiquors(curDate, collectionTarget+'VA', jobs.loadLiquorsIntoDB);}, 60000);
+
 	//wait 2 min before sending emails
 	setTimeout(function(){jobs.sendEmailsFromQueue(collectionTarget);}, 120000);
 });
 
 app.get('/loaddbva', function(req, res) {
-	var collectionTarget = req.query.db || liquorPricesCollection+"VA";
+	var collectionTarget = req.query.db || liquorPricesCollection;
 	var curDate = new Date();
-	VAapi.getAllLiquors(curDate, collectionTarget, jobs.loadLiquorsIntoDB);
+	VAapi.getAllLiquors(curDate, collectionTarget+'VA', jobs.loadLiquorsIntoDB);
 	res.send('importing underwayyyyy');
 });
 

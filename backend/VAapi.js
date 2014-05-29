@@ -7,14 +7,16 @@ require('./jquery.csv.js');
 
 module.exports = {
   getAllLiquors: function (curDate, collectionTarget, callback) {
-  	curDate = tools.parseDate('4/1/2014');
-	fetchCSV('http://www.abc.virginia.gov/Pricelist/text/apr14.csv', function(normalData){
+  	var curMoment = moment(curDate), 
+  		priceListFileName = getPriceListFileName(curMoment), 
+  		saleListFileName = getSaleListFileName(curMoment);
+	fetchCSV('http://www.abc.virginia.gov/Pricelist/text/'+priceListFileName+'.csv', function(normalData){
 		var sourceLiquors = {};
 	    for(var i=0, len=normalData.length; i<len; i++) {
 	      //console.log(normalData[i]);
 	      sourceLiquors[normalData[i].Code] = normalData[i];
 	    }
-	    fetchCSV('http://www.abc.virginia.gov/Pricelist/text/dismay14.csv', function(saleData){
+	    fetchCSV('http://www.abc.virginia.gov/Pricelist/text/'+saleListFileName+'.csv', function(saleData){
 	    	for(var i=0, len=saleData.length; i<len; i++) {
 	          var source = sourceLiquors[saleData[i].Code];
 	          if (source){
@@ -34,21 +36,28 @@ module.exports = {
 
 var fetchCSV = function(sourceUrl, callback){
 	request({url:sourceUrl,method:"GET"}, function(error, response, body){
-		if (!error){
+		if (!error && response.statusCode === 200){
 			var csv = body.replace('""',"'\"").replace("'V\" ","'V\",\"");
-			$.csv.toObjects(csv, {}, function(errparsing, data) {
-				if (!errparsing){
-					callback(data);
-				}
-				else {
-					console.log("Error parsing CSV from VA ABC");
-					console.log(errparsing);
-				}
-			});
+			try {
+			    $.csv.toObjects(csv, {}, function(errparsing, data) {
+					if (!errparsing){
+						callback(data);
+					}
+					else {
+						console.log("Error parsing CSV from VA ABC");
+						console.log(errparsing);
+					}
+				});
+			}
+			catch(err) {
+				console.log("Error processing CSV from VA ABC");
+				console.log(err);
+			}
+			
 		}
 		else {
 			console.log("Error fetching CSV from VA ABC");
-			console.log(err);
+			console.log(error);
 		}
 	});
 	// fs.readFile(url, 'UTF-8', function(err, csv) {
@@ -113,4 +122,38 @@ var transformVAObjToLPObj = function (source, curDate){
 	}
 	
 	return destination;
+};
+
+var getPriceListFileName = function (curMoment){
+	var priceListFileName;
+	switch(curMoment.month()) {
+	case 0:
+	case 1:
+	case 2:
+	    priceListFileName = 'jan';
+	    break;
+	case 3:
+	case 4:
+	case 5:
+	    priceListFileName = 'apr';
+	    break;
+	case 6:
+	case 7:
+	case 8:
+	    priceListFileName = 'jul';
+	    break;
+	case 9:
+	case 10:
+	case 11:
+	    priceListFileName = 'oct';
+	    break;
+	}
+	return priceListFileName+(curMoment.year()-2000);
+};
+
+var getSaleListFileName = function (curMoment){
+	var monthNames = [ "disjan", "disfeb", "dismar", "disapr", "dismay", "disjun",
+    "disjul", "disaug", "dissep", "disoct", "disnov", "disdec" ];
+	var saleListFileName = monthNames[curMoment.month()]+(curMoment.year()-2000);
+	return saleListFileName;
 };
