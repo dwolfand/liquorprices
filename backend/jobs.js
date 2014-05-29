@@ -17,6 +17,10 @@ module.exports = {
 
 	sendEmailsFromQueue: function(targetCollection){
 		var curDate = new Date();
+		if (!process.env.ENV || process.env.ENV !== 'prod'){
+			console.log("Not sending emails since we aren't in prod");
+			return;
+		}
 		tools.getCollection(targetCollection+"-email_log", function(collection) {
 			collection.find({"queue":{"$exists": true}},{},{}).toArray(function(err, results){
 				if (err){
