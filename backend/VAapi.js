@@ -45,18 +45,21 @@ var fetchCSV = function(sourceUrl, callback){
 					}
 					else {
 						console.log("Error parsing CSV from VA ABC");
+						tools.sendEmail(process.env.ADMIN_EMAIL, "ERROR Importing VA Price List", "Error parsing CSV from VA ABC<br/>"+errparsing);
 						console.log(errparsing);
 					}
 				});
 			}
 			catch(err) {
 				console.log("Error processing CSV from VA ABC");
+				tools.sendEmail(process.env.ADMIN_EMAIL, "ERROR Importing VA Price List", "Error processing CSV from VA ABC<br/>"+err);
 				console.log(err);
 			}
 			
 		}
 		else {
 			console.log("Error fetching CSV from VA ABC");
+			tools.sendEmail(process.env.ADMIN_EMAIL, "ERROR Importing VA Price List", "Error fetching CSV from VA ABC<br/>"+error+"<br/>"+response.statusCode);
 			console.log(error);
 		}
 	});
