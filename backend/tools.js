@@ -23,12 +23,12 @@ module.exports = {
 			return;
 		}
 		var payload = {
-			"From" : "liquorprices@mailismagic.com",
+			"From" : "system@liquor.ninja",
 			"To" : toEmail,
 			"Subject" : subject,
 			"Tag" : "Invitation",
 			"HtmlBody" : htmlBody,
-			"ReplyTo" : "liquorprices@mailismagic.com"
+			"ReplyTo" : "system@liquor.ninja"
 		};
 		var options = {
 			url: 'http://api.postmarkapp.com/email',
